@@ -38,10 +38,11 @@ function T:handleTuQuy(array, results, indexesArray, isFindTuQuy)
   --   print('haizzz', indexesArray[i])
   -- end
   if isFindTuQuy ~= true then
+    -- lọc ra những bộ ba
     table.insert(results, { newArray[indexesArray[1]], newArray[indexesArray[2]], newArray[indexesArray[3]] })
-    table.insert(results, { newArray[indexesArray[1]], newArray[indexesArray[2]], newArray[indexesArray[4]] })
-    table.insert(results, { newArray[indexesArray[1]], newArray[indexesArray[3]], newArray[indexesArray[4]] })
-    table.insert(results, { newArray[indexesArray[2]], newArray[indexesArray[3]], newArray[indexesArray[4]] })
+    -- table.insert(results, { newArray[indexesArray[1]], newArray[indexesArray[2]], newArray[indexesArray[4]] })
+    -- table.insert(results, { newArray[indexesArray[1]], newArray[indexesArray[3]], newArray[indexesArray[4]] })
+    -- table.insert(results, { newArray[indexesArray[2]], newArray[indexesArray[3]], newArray[indexesArray[4]] })
   else
     local tuquy = {}
     for i = 1, #(indexesArray) do

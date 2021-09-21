@@ -27,7 +27,7 @@ local function isLonXon(array, startNumber)
   end
 
   if #(array) > 3 then
-    print('check ne dit me may')
+    print('check ne')
     local markAtt = array[startNumber]['att']
 
     for i = startNumber + 1, #(array) do
@@ -96,19 +96,18 @@ function Special:checkIsMauThauXivaGia(array)
   return false
 end
 
-function Special:mauThauXivaGia(array)
+function Special:mauThauXivaGia(array, results, chiTypes, scores)
   local newArray = t:sortDesc(array)
 
   local chiOne = { newArray[1], newArray[4], newArray[7], newArray[12], newArray[13]}
   local chiTwo = { newArray[2], newArray[5], newArray[8], newArray[10], newArray[11]}
   local chiThree = { newArray[3], newArray[6], newArray[9]}
-  
+
   local chiType = { 'mauThau', 'mauThau', 'mauThau' }
   local converted = convertChiToResult(chiOne, chiTwo, chiThree)
 
-  local result = { converted, chiType }
-
-  return result
+  table.insert(results, converted)
+  table.insert(chiTypes, chiType)
 end
 
 -- 3 lá giống nhau (2 -> 12)
@@ -127,7 +126,7 @@ function Special:checkIsSamCoTu2Den12(array)
   return isLonXon(checkArray, 1)
 end
 
-function Special:samCoTu2Den12(array)
+function Special:samCoTu2Den12(array, results, chiTypes, scores)
   local newArray = t:sortDesc(array)
   local value3 = find3Value(array)
 
@@ -159,9 +158,8 @@ function Special:samCoTu2Den12(array)
   local chiType = { 'samCo', 'mauThau', 'mauThau' }
   local converted = convertChiToResult(chiOne, chiTwo, chiThree)
 
-  local result = { converted, chiType }
-
-  return result
+  table.insert(results, converted)
+  table.insert(chiTypes, chiType)
 end
 
 -- xử lý 2 chi rác và 1 chi bất kỳ
@@ -205,17 +203,24 @@ end
 function Special:checkIsManyDoi(array, numberDoi)
   local doiCards = p:findDoi(array)
   local saveValues = {}
+  local saveCards = {}
 
   for i = 1, #(array) - 1 do
     for j = i + 1, #(array) do
       if (array[j]['val'] == array[i]['val']) and t:hasValue(saveValues, array[j]['val']) ~= true then
         print(array[i]['val'])
         table.insert(saveValues, array[i]['val'])
+        table.insert(saveCards, array[i])
+        table.insert(saveCards, array[j])
       end
     end
   end
 
-  return #(saveValues) == #(doiCards) and #(saveValues) == numberDoi
+  local currentCards = t:filterValuesInArray(array, saveCards)
+
+  if isLonXon(currentCards, 1) then
+    return #(saveValues) == #(doiCards) and #(saveValues) == numberDoi
+  end
 end
 
 -- 4 đôi sẽ có 2 trường hợp
@@ -246,7 +251,7 @@ local function handle4Doi1Thu2Doi(doiCards, currentCards)
   return result
 end
 
-function Special:handle4Doi(array)
+function Special:handle4Doi(array, results, chiTypes, scores)
   local doiCards = {}
   local newArray = t:sortDesc(array)
 
@@ -275,7 +280,151 @@ function Special:handle4Doi(array)
 
   local results = { handle4Doi2Thu1MauThau(doiCards, currentCards), handle4Doi1Thu2Doi(doiCards, currentCards) }
 
-  return results
+  for i = 1, #results do
+    table.insert(results, results[i][1])
+    table.insert(chiTypes, results[i][2])
+  end
+
+end
+
+local function handle3Doi3Doi(doiCards, currentCards)
+  local chiOne = { doiCards[5], doiCards[6], currentCards[5], currentCards[6], currentCards[7] }
+  local chiTwo = { doiCards[3], doiCards[4], currentCards[2], currentCards[3], currentCards[4] }
+  local chiThree = { doiCards[1], doiCards[2], currentCards[1] }
+
+  local converted = convertChiToResult(chiOne, chiTwo, chiThree)
+  local types = { 'doi', 'doi', 'doi' }
+  local result = { converted, types }
+
+  return result
+end
+
+local function handle3Doi1Thu1Doi(doiCards, currentCards)
+  local chiOne = { doiCards[3], doiCards[4], doiCards[5], doiCards[6], currentCards[7] }
+  local chiTwo = { doiCards[1], doiCards[2], currentCards[4], currentCards[5], currentCards[6] }
+  local chiThree = { currentCards[1], currentCards[2], currentCards[3] }
+
+  local converted = convertChiToResult(chiOne, chiTwo, chiThree)
+  local types = { 'thu', 'doi', 'mauThau' }
+  local result = { converted, types }
+
+  return result
+end
+
+function Special:handle3Doi(array, results, chiTypes, scores)
+  local doiCards = {}
+  local newArray = t:sortDesc(array)
+
+  print('-------')
+  for i = 1, #(newArray) do
+    print(newArray[i]['val'])
+  end
+  print('-------')
+
+  for i = 1, #(newArray) - 1 do
+    for j = i + 1, #(newArray) do
+      if (newArray[i]['val'] == newArray[j]['val']) then
+        table.insert(doiCards, newArray[i])
+        table.insert(doiCards, newArray[j])
+      end
+    end
+  end
+
+  local currentCards = t:filterValuesInArray(array, doiCards)
+
+  print('-------')
+  for i = 1, #(currentCards) do
+    print(currentCards[i]['val'])
+  end
+  print('-------')
+
+  local results = { handle3Doi3Doi(doiCards, currentCards), handle3Doi1Thu1Doi(doiCards, currentCards) }
+
+  for i = 1, #results do
+    table.insert(results, results[i][1])
+    table.insert(chiTypes, results[i][2])
+  end
+
+  return result
+end
+
+function Special:handle5Doi(array, results, chiTypes, scores)
+  local doiCards = {}
+  local newArray = t:sortDesc(array)
+
+  print('-------')
+  for i = 1, #(newArray) do
+    print(newArray[i]['val'])
+  end
+  print('-------')
+
+  for i = 1, #(newArray) - 1 do
+    for j = i + 1, #(newArray) do
+      if (newArray[i]['val'] == newArray[j]['val']) then
+        table.insert(doiCards, newArray[i])
+        table.insert(doiCards, newArray[j])
+      end
+    end
+  end
+
+  local currentCards = t:filterValuesInArray(array, doiCards)
+
+  print('-------')
+  for i = 1, #(currentCards) do
+    print(currentCards[i]['val'])
+  end
+  print('-------')
+
+  local chiOne = { doiCards[3], doiCards[4], doiCards[9], doiCards[10], currentCards[3] }
+  local chiTwo = { doiCards[5], doiCards[6], doiCards[7], doiCards[8], currentCards[2] }
+  local chiThree = { doiCards[1], doiCards[2], currentCards[1] }
+
+  local converted = convertChiToResult(chiOne, chiTwo, chiThree)
+  local types = { 'thu', 'thu', 'doi' }
+
+  table.insert(results, converted)
+  table.insert(chiTypes, types)
+end
+
+function Special:handle2Doi(array, results, chiTypes, scores)
+  local doiCards = (p:findDoi(array))
+  local newArray = t:sortDesc(array)
+  local saveCards = {}
+
+  print('-------')
+  for i = 1, #(newArray) do
+    print(newArray[i]['val'])
+  end
+  print('-------')
+
+  -- for i = 1, #(newArray) - 1 do
+  --   for j = i + 1, #(newArray) do
+  --     if (newArray[i]['val'] == newArray[j]['val']) then
+  --       table.insert(doiCards, newArray[i])
+  --       table.insert(doiCards, newArray[j])
+  --     end
+  --   end
+  -- end
+
+  for i = 1, #(doiCards) do
+    for j = 1, #(doiCards[i]) do
+      table.insert(saveCards, doiCards[i][j])
+    end
+  end
+
+  local currentCards = t:filterValuesInArray(array, saveCards)
+
+  print('-------')
+  for i = 1, #(currentCards) do
+    print(currentCards[i]['val'])
+  end
+  print('-------')
+
+  local chiOne = { doiCards[1][1], doiCards[1][2] }
+  local chiTwo = { doiCards[2][1], doiCards[2][2] }
+
+  p:handleChiThreeMauThau(chiOne, chiTwo, 'doi', 'doi', currentCards, results, chiTypes, scores)
+
 end
 
 return Special
