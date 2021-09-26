@@ -45,8 +45,12 @@ local function find3Value(array)
   local newArray = t:sortDesc(array)
   local value = 0
 
+  if (p:checkType(array) == 'tuQuy') then
+    return value
+  end
+
   for i = 1, #(newArray) - 2 do
-    print(newArray[i]['val'])
+    print('cc', newArray[i]['val'])
     if (
        newArray[i]['val'] ==  newArray[i + 1]['val'] and
        newArray[i + 2]['val'] ==  newArray[i + 1]['val']
@@ -55,6 +59,8 @@ local function find3Value(array)
         value = newArray[i]['val']
       elseif newArray[i + 3]['val'] ~=  newArray[i + 2]['val'] then
         value = newArray[i]['val']
+      elseif newArray[i + 3]['val'] == newArray[i + 2]['val'] then
+        break
       end
     end
   end

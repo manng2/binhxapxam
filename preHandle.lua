@@ -354,6 +354,10 @@ function PreHandle:isSanh(array)
     local tmp = t:shallowCopy(array)
     tmp = t:sortAsc(tmp)
 
+    if (tmp[1]['val'] == 2 and tmp[2]['val'] == 3 and tmp[3]['val'] == 4 and tmp[4]['val'] == 5 and tmp[5]['val'] == 14) then
+        return true
+    end
+
     for i = 1, #(tmp) - 1 do
         if tmp[i + 1]['val'] - tmp[i]['val'] > 1 then return false end
     end

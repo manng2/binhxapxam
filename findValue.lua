@@ -66,8 +66,8 @@ local mauThau3InitStepChiOne = 3
 local thungPhaSanhInitPointChiTwo = 8000
 local thungPhaSanhInitStepChiTwo = 10
 
-local tuQuyInitPointChiOne = 6000
-local tuQuyInitStepChiOne = 20
+local tuQuyInitPointChiTwo = 6000
+local tuQuyInitStepChiTwo = 20
 
 local cuLuInitPointChiTwo = 5000
 local cuLuInitStepChiTwo = 15
@@ -190,7 +190,6 @@ function Count:tuQuy(array, index)
   end
 
   -- distance = distance + copyTuQuyMax[5] - copyValueArray[5] + 1
-  
   -- print('distance: ', distance)
   return maxInit - distance * stepInit
 
