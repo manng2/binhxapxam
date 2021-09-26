@@ -774,11 +774,19 @@ function PreHandle:divideRacsTo3Chi(chiOne, chiTwo, chiThree, racs)
             break
         end
 
-        if t:hasValue(saveTmpChiOne, racs[i]['val']) ~= true then
-            table.insert(newChiOne, racs[i])
-            table.insert(saveTmp, racs[i])
-            table.insert(saveTmpChiOne, racs[i]['val'])
+        if t:hasValue(saveTmpChiOne, racs[i]['val']) then
+            local tmp = t:shallowCopy(newChiTwo[5])
+            newChiTwo[5] = t:shallowCopy(racs[i])
+            racs[i] = t:shallowCopy(tmp)
         end
+        table.insert(newChiOne, racs[i])
+        table.insert(saveTmp, racs[i])
+        table.insert(saveTmpChiOne, racs[i]['val'])
+        -- if t:hasValue(saveTmpChiOne, racs[i]['val']) ~= true then
+            -- table.insert(newChiOne, racs[i])
+            -- table.insert(saveTmp, racs[i])
+            -- table.insert(saveTmpChiOne, racs[i]['val'])
+        -- end
     end
 
     racs = t:filterValuesInArray(racs, saveTmp)
@@ -792,11 +800,74 @@ function PreHandle:divideRacsTo3Chi(chiOne, chiTwo, chiThree, racs)
     return {}
 end
 
+-- function PreHandle:divideRacsTo3Chi(chiOne, chiTwo, chiThree, racs)
+--     local itr = 1
+--     local saveTmpChiOne = {}
+--     local saveTmpChiTwo = {}
+--     local saveTmpChiThree = {}
+
+--     local newChiOne = t:shallowCopy(chiOne)
+--     local newChiTwo = t:shallowCopy(chiTwo)
+--     local newChiThree = t:shallowCopy(chiThree)
+
+--     local saveTmp = {}
+
+--     for i = 1, #chiOne do
+--         table.insert(saveTmpChiOne, chiOne[i]['val'])
+--     end
+
+--     for i = 1, #chiTwo do
+--         table.insert(saveTmpChiTwo, chiTwo[i]['val'])
+--     end
+
+--     for i = 1, #chiThree do
+--         table.insert(saveTmpChiThree, chiThree[i]['val'])
+--     end
+
+--     while itr ~= #racs do
+--         if (#chiThree < 3 and t:hasValue(saveTmpChiThree, racs[itr]['val']) ~= true) then
+--             table.insert(chiThree, racs[itr])
+--             table.insert(saveTmpChiThree, racs[itr]['val'])
+
+--             racs = t:filterValuesInArray(racs[itr])
+
+--             if #chiThree == 3 then
+--                 itr = 1
+--             end
+--         elseif (#chiThree < 3 and t:hasValue(saveTmpChiThree, racs[itr]['val'])) then
+--             itr = itr + 1
+--         elseif (#chiTwo < 5 and t:hasValue(saveTmpChiTwo, racs[itr]['val']) ~= true) then
+--             table.insert(chiTwo, racs[itr])
+--             table.insert(saveTmpChiTwo, racs[itr]['val'])
+
+--             racs = t:filterValuesInArray(racs[itr])
+
+--             if #chiTwo == 5 then
+--                 itr = 1
+--             end
+--         elseif (#chiTwo < 5 and t:hasValue(saveTmpChiTwo, racs[itr]['val'])) then
+--             itr = itr + 1
+--         elseif 
+--         end
+
+--         itr = itr + 1
+
+--         if (#chiTwo < 5 and t:hasValue(saveTmpChiTwo, racs[itr]['val']) ~= true) then
+--             table.insert(chiTwo, racs[itr])
+--             table.insert(saveTmpChiTwo, racs[itr]['val'])
+
+--             racs = t:filterValuesInArray(racs[itr])
+--         end
+
+--         if (#chiOne < 5) and 
+--     end
+-- end
+
 function PreHandle:isResultValid(chiOne, chiTwo, chiThree, types)
     -- if types[1] == 'samCo' and types[2] == 'samCo' and types[3] == 'samCo' then
     --     os.exit()
     -- end
-    print(types[1], types[2], types[3])
+    -- print(types[1], types[2], types[3])
     -- os.exit()
     return PreHandle:checkType(chiOne) == types[1] and
         PreHandle:checkType(chiTwo) == types[2] and

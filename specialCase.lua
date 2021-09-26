@@ -114,6 +114,11 @@ end
 function Special:checkIsSamCoTu2Den12(array)
   local value3 = find3Value(array)
   print('value3 ne: ', value3)
+
+  if (value3 == 0) then
+    return false
+  end
+
   local newArray = t:sortDesc(array)
   local checkArray = {}
 
@@ -288,64 +293,97 @@ function Special:handle4Doi(array, results, chiTypes, scores)
 end
 
 local function handle3Doi3Doi(doiCards, currentCards)
-  local chiOne = { doiCards[5], doiCards[6], currentCards[5], currentCards[6], currentCards[7] }
-  local chiTwo = { doiCards[3], doiCards[4], currentCards[2], currentCards[3], currentCards[4] }
-  local chiThree = { doiCards[1], doiCards[2], currentCards[1] }
+  local chiOne = { doiCards[1], doiCards[2] }
+  local chiTwo = { doiCards[3], doiCards[4] }
+  local chiThree = { doiCards[5], doiCards[6] }
 
+  local arrayAfterFillRacs = p:divideRacsTo3Chi(chiOne, chiTwo, chiThree, currentCards)
+
+  chiOne = arrayAfterFillRacs[1]
+  chiTwo = arrayAfterFillRacs[2]
+  chiThree = arrayAfterFillRacs[3]
+
+  print(#chiOne, #chiTwo, #chiThree)
+  -- os.exit()
   local converted = convertChiToResult(chiOne, chiTwo, chiThree)
   local types = { 'doi', 'doi', 'doi' }
   local result = { converted, types }
 
+  -- for i = 1, #converted do
+  --   print(converted[i]['val'])
+  -- end
+  -- os.exit()
   return result
 end
 
 local function handle3Doi1Thu1Doi(doiCards, currentCards)
-  local chiOne = { doiCards[3], doiCards[4], doiCards[5], doiCards[6], currentCards[7] }
-  local chiTwo = { doiCards[1], doiCards[2], currentCards[4], currentCards[5], currentCards[6] }
-  local chiThree = { currentCards[1], currentCards[2], currentCards[3] }
+  -- local chiOne = { doiCards[3], doiCards[4], doiCards[5], doiCards[6], currentCards[7] }
+  -- local chiTwo = { doiCards[1], doiCards[2], currentCards[4], currentCards[5], currentCards[6] }
+  -- local chiThree = { currentCards[1], currentCards[2], currentCards[3] }
+
+  local chiOne = { doiCards[3], doiCards[4], doiCards[5], doiCards[6] }
+  local chiTwo = { doiCards[1], doiCards[2] }
+  local chiThree = { }
+
+  local arrayAfterFillRacs = p:divideRacsTo3Chi(chiOne, chiTwo, chiThree, currentCards)
+
+  chiOne = arrayAfterFillRacs[1]
+  chiTwo = arrayAfterFillRacs[2]
+  chiThree = arrayAfterFillRacs[3]
 
   local converted = convertChiToResult(chiOne, chiTwo, chiThree)
   local types = { 'thu', 'doi', 'mauThau' }
   local result = { converted, types }
-
+  -- for i = 1, #converted do
+  --   print(converted[i]['val'])
+  -- end
+  -- os.exit()
   return result
 end
 
 function Special:handle3Doi(array, results, chiTypes, scores)
   local doiCards = {}
   local newArray = t:sortDesc(array)
+  local saveValueDoi = {}
 
-  print('-------')
+  print('---3 doi---')
   for i = 1, #(newArray) do
     print(newArray[i]['val'])
   end
-  print('-------')
+  print('---3 doi---')
 
   for i = 1, #(newArray) - 1 do
     for j = i + 1, #(newArray) do
-      if (newArray[i]['val'] == newArray[j]['val']) then
+      if (newArray[i]['val'] == newArray[j]['val'] and t:hasValue(saveValueDoi, newArray[i]['val']) ~= true) then
         table.insert(doiCards, newArray[i])
         table.insert(doiCards, newArray[j])
+        table.insert(saveValueDoi, newArray[i]['val'])
       end
     end
   end
 
   local currentCards = t:filterValuesInArray(array, doiCards)
 
-  print('-------')
+  print('--cur--')
   for i = 1, #(currentCards) do
     print(currentCards[i]['val'])
   end
-  print('-------')
+  print('--cur--')
+  print('---doi---')
+  for i = 1, #(doiCards) do
+    print(doiCards[i]['val'])
+  end
+  print('---doi---')
 
-  local results = { handle3Doi3Doi(doiCards, currentCards), handle3Doi1Thu1Doi(doiCards, currentCards) }
+  local finalResults = { handle3Doi3Doi(doiCards, currentCards), handle3Doi1Thu1Doi(doiCards, currentCards) }
+  print('RESULTS 3doi', #finalResults)
 
-  for i = 1, #results do
-    table.insert(results, results[i][1])
-    table.insert(chiTypes, results[i][2])
+  for i = 1, #finalResults do
+    table.insert(results, finalResults[i][1])
+    table.insert(chiTypes, finalResults[i][2])
   end
 
-  return result
+  -- return results
 end
 
 function Special:handle5Doi(array, results, chiTypes, scores)

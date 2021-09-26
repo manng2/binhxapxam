@@ -585,6 +585,13 @@ function Count:doi5(array, index)
 
   local nextX = Count:findNextInDoi5(copydoi5Max)
 
+  for i = 1, #nextX do
+    print(nextX[i])
+  end
+  for i = 1, #copyValueArray do
+    print(copyValueArray[i])
+  end
+  print(#nextX, #copyValueArray)
   while checkIsMatching(nextX, copyValueArray) ~= true do
     distance = distance + 1
     nextX = Count:findNextInDoi5(copydoi5Max)
