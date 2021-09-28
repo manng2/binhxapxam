@@ -38,18 +38,18 @@ local function isValidDoi(array, checkValue)
     return count == 2
 end
 
-local function isDoi(array)
-    local count = 1
-    for i = 1, #(array) - 1 do
-        for j = i + 1, #(array) do
-            if array[j]['val'] == array[i]['val'] then
-                count = count + 1
-            end
-        end
-    end
+-- local function isDoi(array)
+--     local count = 1
+--     for i = 1, #(array) - 1 do
+--         for j = i + 1, #(array) do
+--             if array[j]['val'] == array[i]['val'] then
+--                 count = count + 1
+--             end
+--         end
+--     end
 
-    return count == 2
-end
+--     return count == 2
+-- end
 
 function Game:findDoi(array)
     local doiArray = p:findDoi(array)
@@ -239,10 +239,11 @@ local function isValidInThung(array)
 end
 
 function Game:findThung(array)
-    local redThung = p:findThung(array)[1]
-    local blackThung = p:findThung(array)[2]
+    -- local redThung = p:findThung(array)[1]
+    -- local blackThung = p:findThung(array)[2]
 
-    local results = t:mergeDataInTwoArray(redThung, blackThung)
+    -- local results = t:mergeDataInTwoArray(redThung, blackThung)
+    local results = p:findThung(array)
     local finalResults = {}
 
     for i = 1, #(results) do
@@ -712,6 +713,17 @@ local function findNextWithChiOne(results, chiOne, type, currentCards, chiType,
     end
 end
 
+local function writeEvents(content)
+    file = io.open("oppCards.lua", "a")
+
+    io.output(file)
+    io.write('--****--\n')
+    io.write(content .. '\n')
+
+    -- closes the open file
+    io.close(file)
+end
+
 local function writeResults(content)
     file = io.open("write.lua", "a")
 
@@ -727,25 +739,7 @@ local function writeResults(content)
 end
 
 local function readableData(array, types, scores)
-    -- for i = 1, #(array) do
-    --   print(array[i]['val'])
-    -- end
-    -- print('--0-0-0-0-0-0--')
-
-    -- if scores == nil then
-    --     print(array[1]['val'], array[2]['val'], array[3]['val'], ' .. ',
-    --           types[1])
-    --     os.exit()
-    -- end
-    -- if #array == 12 then
-    --     print('-----------')
-    --     for i = 1, 12 do
-    --         print(array[i]['val'], array[i]['att'])
-    --     end
-    --     print('-----------')
-
-    -- end
-    -- print(#array, types[1], types[2], types[3])
+    print(#array, types[1], types[2], types[3])
 
     local result = tostring(scores) .. '| chi 3: ' .. types[3] .. ' | ' ..
                        'chi 2: ' .. types[2] .. ' | ' .. 'chi 1: ' .. types[1] ..
@@ -938,7 +932,7 @@ local function handleFromTopToBottom(currentType, chiOne, currentCards, results,
     -- end
 end
 
-local function handleChiOneThungPhaSanh(chiOne, currentCards, results, chiTypes,
+function Game:handleChiOneThungPhaSanh(chiOne, currentCards, results, chiTypes,
                                         scores)
     local currentKind = Game:findThungPhaSanh(currentCards)
     print('[CARDS] Co ', #currentKind, ' thungPhaSanh')
@@ -1127,7 +1121,7 @@ local function handleFromTopToBottomTuQuy(chiOne, currentCards, results,
     end
 end
 
-local function handleChiOneTuQuy(chiOne, currentCards, results, chiTypes, scores)
+function Game:handleChiOneTuQuy(chiOne, currentCards, results, chiTypes, scores)
     local currentKind = p:findBaHoacBon(currentCards, true)
 
     if #currentKind > 0 then
@@ -1206,7 +1200,7 @@ local function handleChiOneTuQuy(chiOne, currentCards, results, chiTypes, scores
     handleFromTopToBottomTuQuy(chiOne, currentCards, results, chiTypes, scores)
 end
 
-local function handleChiOneCuLu(chiOne, currentCards, results, chiTypes, scores)
+function Game:handleChiOneCuLu(chiOne, currentCards, results, chiTypes, scores)
     local currentKind = Game:findCuLu(currentCards)
     print('[CARDS] Co ', #currentKind, ' cu Lu')
     if (#currentKind) > 0 then
@@ -1261,7 +1255,7 @@ local function handleChiOneCuLu(chiOne, currentCards, results, chiTypes, scores)
                           scores)
 end
 
-local function handleChiOneThung(chiOne, currentCards, results, chiTypes, scores)
+function Game:handleChiOneThung(chiOne, currentCards, results, chiTypes, scores)
     local currentKind = Game:findThung(currentCards)
     print('[CARDS] Co ', #currentKind, ' thung')
     if (#currentKind) > 0 then
@@ -1308,7 +1302,7 @@ local function handleChiOneThung(chiOne, currentCards, results, chiTypes, scores
                           scores)
 end
 
-local function handleChiOneSanh(chiOne, currentCards, results, chiTypes, scores)
+function Game:handleChiOneSanh(chiOne, currentCards, results, chiTypes, scores)
     local currentKind = Game:findSanh(currentCards)
     print('[CARDS] Co ', #currentKind, ' sanh')
     if (#currentKind) > 0 then
@@ -1470,7 +1464,7 @@ local function handleFromTopToBottomSamCo(chiOne, currentCards, results,
     end
 end
 
-local function handleChiOneSamCo(chiOne, currentCards, results, chiTypes, scores)
+function Game:handleChiOneSamCo(chiOne, currentCards, results, chiTypes, scores)
     local currentKind = p:findBaHoacBon(currentCards, false)
     local saveTmpChiOne = t:shallowCopy(chiOne)
 
@@ -1625,16 +1619,7 @@ local function calculateResultValue(result, type)
 
 end
 
-function Game:play(array)
-    local results = {}
-    local chiTypes = {}
-    local scores = {}
-
-    local types = {
-        'thungPhaSanh', 'tuQuy', 'cuLu', 'thung', 'sanh', 'samCo', 'thu', 'doi',
-        'mauThau'
-    }
-
+function Game:findResults(array, results, chiTypes, scores)
     for i = 1, #TYPES do
         local currentKind = findCurrentKindInNewVersion(TYPES[i], array)
         print('[CHI ONE]', TYPES[i], #currentKind)
@@ -1644,35 +1629,83 @@ function Game:play(array)
                 local currentCards = t:filterValuesInArray(array, chiOne)
 
                 if TYPES[i] == 'thungPhaSanh' then
-                    handleChiOneThungPhaSanh(chiOne, currentCards, results,
+                    Game:handleChiOneThungPhaSanh(chiOne, currentCards, results,
                                              chiTypes, scores)
                 elseif TYPES[i] == 'tuQuy' then
-                    handleChiOneTuQuy(chiOne, currentCards, results, chiTypes,
+                    Game:handleChiOneTuQuy(chiOne, currentCards, results, chiTypes,
                                       scores)
                 elseif TYPES[i] == 'cuLu' then
-                    handleChiOneCuLu(chiOne, currentCards, results, chiTypes,
+                    Game:handleChiOneCuLu(chiOne, currentCards, results, chiTypes,
                                      scores)
                 elseif TYPES[i] == 'thung' then
-                    handleChiOneThung(chiOne, currentCards, results, chiTypes,
+                    Game:handleChiOneThung(chiOne, currentCards, results, chiTypes,
                                       scores)
                 elseif TYPES[i] == 'sanh' then
-                    handleChiOneSanh(chiOne, currentCards, results, chiTypes,
+                    Game:handleChiOneSanh(chiOne, currentCards, results, chiTypes,
                                      scores)
                 elseif TYPES[i] == 'samCo' then
-                    handleChiOneSamCo(chiOne, currentCards, results, chiTypes,
+                    Game:handleChiOneSamCo(chiOne, currentCards, results, chiTypes,
                                       scores)
                 end
             end
         end
     end
+end
+
+local function handleToiTrang(results, chiTypes, myCards)
+    local kq = specialCase:soToiTrang(myCards)
+
+    if (kq ~= nil) then
+      local text = readableData(kq[1], { kq[3], kq[3], kq[3] }, kq[2])
+      writeResults(text)
+    end
+end
+
+local function writeEventsToFile(results, chiTypes, scores)
+    for i = 1, #results do
+        local text = readableData(results[i], chiTypes[i], scores[i])
+        writeEvents(text)
+    end
+end
+
+local function handleFindFinalResult(results, chiTypes, scores, array, saveIdx, saveScore)
+    local kq = specialCase:soToiTrang((array))
+    local text = ''
+
+    text = readableData(results[saveIdx], chiTypes[saveIdx], saveScore)
+
+    if (kq ~= nil) then
+        if (kq[2] >= saveScore) then
+            table.insert(results, kq[1])
+            table.insert(chiTypes, { kq[3], kq[3], kq[3] })
+            table.insert(scores, kq[2])
+
+            text = readableData(kq[1], { kq[3], kq[3], kq[3] }, kq[2])
+        end
+    end
+
+    writeResults(text)
+end
+
+function Game:play(array)
+    local results = {}
+    local chiTypes = {}
+    local scores = {}
+
+    local RESULT = nil
+
+    local types = {
+        'thungPhaSanh', 'tuQuy', 'cuLu', 'thung', 'sanh', 'samCo', 'thu', 'doi',
+        'mauThau'
+    }
+
+    Game:findResults(array, results, chiTypes, scores)
 
     -- [START] HANDLE SPECIAL CASE ZONE
 
     handleSpecialCase(array, results, chiTypes, scores)
 
     -- [END] HANDLE SPECIAL CASE ZONE
-
-    -- [START] HANDLE COUNT VALUE
 
     for i = 1, #results do
         local score = calculateResultValue(results[i], chiTypes[i])
@@ -1685,31 +1718,24 @@ function Game:play(array)
     print('TYPES', #(chiTypes))
     print('SCORES', #scores)
 
-    -- print('CHECK ZONE')
-    -- for i = 1, #(results) do
-    --     print('------')
-    --     -- print('len: ', #(results[i]))
-    --     print(chiTypes[i][1], chiTypes[i][2], chiTypes[i][3])
-    --     for j = 1, #(results[i]) do
-    --         print(results[i][j]['val'], results[i][j]['att'])
-    --         if j == 5 or j == 10 then print('-') end
-    --     end
-    --     print('------')
-
-    -- end
+    local saveScore = scores[1]
+    local saveIdx = 1
 
     for i = 1, #(results) do
         local text = ''
-        for j = 1, #(results[i]) do
-            if #(results[i]) then
-                -- print(#results[i])
-                -- print(chiTypes[i][1], chiTypes[i][2], chiTypes[i][3])
-            end
-            text = readableData(results[i], chiTypes[i], scores[i])
+        if (scores[i] > saveScore) then
+            saveScore = scores[i]
+            saveIdx = i
         end
-        writeResults(text)
     end
+    RESULT = results[saveIdx]
 
+
+    handleFindFinalResult(results, chiTypes, scores, array, saveIdx, saveScore)
+
+    writeEventsToFile(results, chiTypes, scores)
+
+    return { RESULT, chiTypes[saveIdx], saveScore }
 end
 
 return Game

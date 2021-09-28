@@ -13,7 +13,7 @@ function CompareAction:new(o)
    self.__index = self
    return o
 end
-  
+
 local function doi(firstArray, secondArray) 
   local cardsDoiOne = {}
   local cardsDoiTwo = {}

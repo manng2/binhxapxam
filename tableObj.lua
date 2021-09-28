@@ -333,9 +333,20 @@ function T:filterValuesInArray(array, target)
   return T:sortDesc(results)
 end
 
+function T:splitByChi(cards)
+  local chiOne = { cards[1], cards[2], cards[3], cards[4], cards[5] }
+  local chiTwo = { cards[6], cards[7], cards[8], cards[9], cards[10] }
+  local chiThree = { cards[11], cards[12], cards[13] }
+
+  return {
+    chiOne, chiTwo, chiThree
+  }
+end
+
+
 local function isSameAtt(array)
   local newArray = T:shallowCopy(array)
-  
+
   for i = 1, #(newArray) - 1 do
     for j = i + 1, #(newArray) do
       if newArray[j]['att'] ~= newArray[i]['att'] then

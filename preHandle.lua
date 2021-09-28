@@ -257,7 +257,7 @@ function PreHandle:findSanh(array)
     for i = 1, #(results) do
         local tmp = t:splitSanh(results[i])
 
-        for j = 1, #(tmp) do table.insert(finalResults, tmp[j]) end
+        for j = 1, #(tmp) do table.insert(finalResults, t:sortDesc(tmp[j])) end
     end
     -- print('Sanh: ', #(finalResults))
 
@@ -273,10 +273,17 @@ function PreHandle:findThung(array)
     local blackThung = t:findThungByColorAndAtt(blackCards)
 
     local results = {}
-    table.insert(results, redThung)
-    table.insert(results, blackThung)
-    -- print(#(redThung))
-    -- print(#(blackThung))
+
+    for i = 1, #redThung do
+        if (PreHandle:isSanh(redThung[i]) ~= true) then
+            table.insert(results, redThung[i])
+        end
+    end
+    for i = 1, #blackThung do
+        if (PreHandle:isSanh(blackThung[i]) ~= true) then
+            table.insert(results, blackThung[i])
+        end
+    end
 
     return results
 end

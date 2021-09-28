@@ -3,18 +3,50 @@
 
 array = {
   { color = 1, val = 14, att = 4 }, --
+  { color = 0, val = 12, att = 2 }, --
+  { color = 1, val = 9, att = 3 },
+  { color = 0, val = 9, att = 1 }, --
+  { color = 1, val = 9, att = 4 }, --
+  { color = 0, val = 6, att = 2 },
+  { color = 0, val = 6, att = 1 },
+  { color = 1, val = 6, att = 4 },
+  { color = 1, val = 6, att = 3 },
+  { color = 1, val = 3, att = 3 },
+  { color = 1, val = 3, att = 4 },
+  { color = 0, val = 3, att = 2 },
+  { color = 0, val = 3, att = 1 },
+}
+
+myArray = {
+  { color = 1, val = 14, att = 4 }, --
   { color = 0, val = 14, att = 2 }, --
   { color = 1, val = 14, att = 3 },
-  { color = 0, val = 13, att = 1 }, --
-  { color = 1, val = 13, att = 4 }, --
-  { color = 0, val = 13, att = 2 },
+  { color = 0, val = 14, att = 1 }, --
+  { color = 1, val = 12, att = 3 }, --
+  { color = 0, val = 12, att = 2 },
   { color = 0, val = 12, att = 1 },
-  { color = 1, val = 8, att = 4 },
-  { color = 1, val = 6, att = 4 },
-  { color = 1, val = 5, att = 3 },
+  { color = 1, val = 10, att = 4 },
+  { color = 1, val = 9, att = 3 },
+  { color = 1, val = 6, att = 3 },
   { color = 1, val = 5, att = 4 },
-  { color = 0, val = 5, att = 2 },
-  { color = 0, val = 5, att = 1 },
+  { color = 0, val = 4, att = 2 },
+  { color = 0, val = 4, att = 1 },
+}
+
+testArray = {
+  { color = 1, val = 14, att = 3 }, --
+  { color = 1, val = 13, att = 4 }, --
+  { color = 1, val = 12, att = 3 }, --
+  { color = 1, val = 11, att = 3 },
+  { color = 1, val = 10, att = 4 }, --
+  { color = 1, val = 9, att = 3 }, --
+  { color = 1, val = 8, att = 4 }, --
+  { color = 1, val = 7, att = 4 },
+  { color = 1, val = 6, att = 3 },
+  { color = 1, val = 5, att = 4 },
+  { color = 1, val = 4, att = 3 },
+  { color = 1, val = 3, att = 3 },
+  { color = 1, val = 2, att = 4 },
 }
 
 local T = require "tableObj"
@@ -23,10 +55,12 @@ local Game = require "game"
 local CompareAction = require "compare"
 local Count = require "findValue"
 local Special = require "specialCase"
+local Find = require "findCards"
 
 t = T:new()
 p = PreHandle:new()
 g = Game:new()
+f = Find:new()
 c = CompareAction:new()
 countValue = Count:new()
 specialCase = Special:new()
@@ -46,10 +80,15 @@ specialCase = Special:new()
 -- local results = g:findSanh(array)
 -- local results = g:findSamCo(array)
 -- local results = g:findThu(array)
--- local results = g:findDoi(array)
+-- local results = g:findDoi(testArray)
 -- local results = g:findMauThau(array)
 
+-- local results = p:findDoi(testArray)
+
 -- print(#results)
+-- for i = 1, #results do
+--   print(results[i][1]['val'])
+-- end
 -- for i = 1, #(results) do
 --   if #(results) == 4 or #(results) == 2 then
 --     print('------')
@@ -63,7 +102,21 @@ specialCase = Special:new()
 
 -- print(#p:findDoi(array, false))
 
-g:play(array)
+local opp = g:play(array)
+f:findCards(testArray, opp[1], opp[2])
+
+-- local db = specialCase:findHaiPhayNamThung(testArray)
+-- local db = specialCase:findSauDoi(testArray)
+-- local db = specialCase:findHaiPhayNamSanh(testArray)
+-- local db = specialCase:findDongHoa(testArray)
+-- local db = specialCase:findNamDoiMotSam(testArray)
+-- local db = specialCase:findLienMinhRong(testArray)
+-- local db = specialCase:findLienMinhTocRong(testArray)
+
+-- for i = 1, #db do
+--   print(db[i]['val'])
+-- end
+
 local x1 = { 
   { color = 0, val = 6, att = 2 },
   { color = 0, val = 5, att = 2 },
