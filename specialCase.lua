@@ -623,7 +623,9 @@ local function isNamDoiMotXam(cards)
     return false
   end
 
-  local doiArray = p:findDoi(cards)
+  local newArray = t:filterValuesInArray(cards, sam[1])
+
+  local doiArray = p:findDoi(newArray)
 
   -- because of has samCo so 6 is base value
   if (#doiArray == 6) then

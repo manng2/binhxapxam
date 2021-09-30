@@ -1,6 +1,7 @@
 -- 1: den
 -- 0: do
 
+-- 1: co 2: ro 3: chuon 4: bich
 array = {
   { color = 1, val = 14, att = 4 }, --
   { color = 0, val = 13, att = 2 }, --

@@ -780,12 +780,21 @@ function PreHandle:divideRacsTo3Chi(chiOne, chiTwo, chiThree, racs)
     print('chi 2: ', #newChiTwo)
     print('chi 3: ', #newChiThree)
 
+    -- hard code when cannot fill to chi Two
+
+    if (#newChiTwo < 5) then
+        return {}
+    end
+
+    -- end hard code
+
     for i = 1, #racs do
         if #newChiOne == 5 then
             break
         end
 
         if t:hasValue(saveTmpChiOne, racs[i]['val']) then
+
             local tmp = t:shallowCopy(newChiTwo[5])
             newChiTwo[5] = t:shallowCopy(racs[i])
             racs[i] = t:shallowCopy(tmp)

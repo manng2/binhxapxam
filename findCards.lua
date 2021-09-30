@@ -18,9 +18,9 @@ local TOITRANG_TYPES = {
 }
 
 local tuQuyChiOne = 8
-local sanhChiOne = 10
+local thungPhaSanhChiOne = 10
 local tuQuyChiTwo = 16
-local sanhChiTwo = 20
+local thungPhaSanhChiTwo = 20
 local cuLuChiTwo = 4
 local samCoChiThree = 6
 
@@ -150,9 +150,9 @@ local function isOneBiggerThanTwo(one, two, types)
 end
 
 -- local tuQuyChiOne = 8
--- local sanhChiOne = 10
+-- local thungPhaSanhChiOne = 10
 -- local tuQuyChiTwo = 16
--- local sanhChiTwo = 20
+-- local thungPhaSanhChiTwo = 20
 -- local cuLuChiTwo = 4
 -- local samCoChiThree = 6
 
@@ -163,11 +163,11 @@ local function calculateValue(type, chiIndex)
     else
       return tuQuyChiTwo
     end
-  elseif type == 'sanh' then
+  elseif type == 'thungPhaSanh' then
     if (chiIndex == 1) then
-      return sanhChiOne
+      return thungPhaSanhChiOne
     else
-      return sanhChiTwo
+      return thungPhaSanhChiTwo
     end
   elseif type == 'cuLu' and chiIndex == 2 then
     return cuLuChiTwo
@@ -364,7 +364,11 @@ function Find:findCards(cards, oppCards, oppTypes)
       local binhLung = findBinhLung(results)
       text = readableData(binhLung, { 'binhLung', 'binhLung', 'binhLung' }, -6)
     else
-      text = readableData(curr[1], { curr[2], curr[2], curr[2] }, findToiTrangScore(curr[2]))
+      if (curr[2] == oppTypes[1]) then
+        text = readableData(curr[1], { curr[2], curr[2], curr[2] }, 0)
+      else
+        text = readableData(curr[1], { curr[2], curr[2], curr[2] }, findToiTrangScore(curr[2]))
+      end
     end
 
     writeResults(text)
