@@ -3,32 +3,32 @@
 
 array = {
   { color = 1, val = 14, att = 4 }, --
-  { color = 0, val = 12, att = 2 }, --
-  { color = 1, val = 9, att = 3 },
+  { color = 0, val = 13, att = 2 }, --
+  { color = 1, val = 13, att = 3 },
   { color = 0, val = 9, att = 1 }, --
   { color = 1, val = 9, att = 4 }, --
-  { color = 0, val = 6, att = 2 },
-  { color = 0, val = 6, att = 1 },
+  { color = 0, val = 8, att = 2 },
+  { color = 0, val = 8, att = 1 },
   { color = 1, val = 6, att = 4 },
   { color = 1, val = 6, att = 3 },
-  { color = 1, val = 3, att = 3 },
   { color = 1, val = 3, att = 4 },
   { color = 0, val = 3, att = 2 },
-  { color = 0, val = 3, att = 1 },
+  { color = 0, val = 2, att = 1 },
+  { color = 1, val = 2, att = 4 },
 }
 
 myArray = {
   { color = 1, val = 14, att = 4 }, --
   { color = 0, val = 14, att = 2 }, --
-  { color = 1, val = 14, att = 3 },
-  { color = 0, val = 14, att = 1 }, --
+  { color = 1, val = 13, att = 3 },
+  { color = 0, val = 13, att = 1 }, --
   { color = 1, val = 12, att = 3 }, --
   { color = 0, val = 12, att = 2 },
-  { color = 0, val = 12, att = 1 },
+  { color = 0, val = 10, att = 1 },
   { color = 1, val = 10, att = 4 },
-  { color = 1, val = 9, att = 3 },
   { color = 1, val = 6, att = 3 },
-  { color = 1, val = 5, att = 4 },
+  { color = 1, val = 6, att = 4 },
+  { color = 1, val = 4, att = 3 },
   { color = 0, val = 4, att = 2 },
   { color = 0, val = 4, att = 1 },
 }
@@ -103,7 +103,7 @@ specialCase = Special:new()
 -- print(#p:findDoi(array, false))
 
 local opp = g:play(array)
-f:findCards(testArray, opp[1], opp[2])
+f:findCards(myArray, opp[1], opp[2])
 
 -- local db = specialCase:findHaiPhayNamThung(testArray)
 -- local db = specialCase:findSauDoi(testArray)

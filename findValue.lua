@@ -99,11 +99,19 @@ local mauThau3InitStepChiTwo = 6
 
 -- parameter array must be sort desc
 
+local lienMinhTocRong = 100000
+local lienMinhRong = 50000
+local dongHoa = 30000
+local namDoiMotSam = 10000
+local haiPhayNamThung = 8000
+local haiPhayNamSanh = 8000
+local sauDoi = 8000
+
 local function copyArrayValue(array)
   local value = {}
 
   for i = 1, #(array) do
-    table.insert(value, array[i]['val'])  
+    table.insert(value, array[i]['val'])
   end
 
   return value
@@ -692,6 +700,31 @@ function Count:mauThau3(array, index)
   end
   print('distance: ', distance)
   return maxInit - distance * stepInit
+end
+
+function Count:toiTrang(type)
+  print('type', type)
+  if (type == 'lienMinhTocRong') then
+    return lienMinhTocRong
+  end
+  if (type == 'lienMinhRong') then
+    return lienMinhRong
+  end
+  if (type == 'dongHoa') then
+    return dongHoa
+  end
+  if (type == 'namDoiMotSam') then
+    return namDoiMotSam
+  end
+  if (type == 'haiPhayNamThung') then
+    return haiPhayNamThung
+  end
+  if (type == 'haiPhayNamSanh') then
+    return haiPhayNamSanh
+  end
+  if (type == 'sauDoi') then
+    return sauDoi
+  end
 end
 
 return Count

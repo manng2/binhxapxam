@@ -514,10 +514,17 @@ function Special:findSauDoi(cards)
 
   local idx = 1
 
-  while idx ~= #newCards - 1 do
+  while idx < #newCards do
+    print('idx: ', idx)
     if (newCards[idx]['val'] == newCards[idx + 1]['val']) then
       table.insert(doiArray, { newCards[idx], newCards[idx + 1] })
+      print('remove ', newCards[idx]['val'])
       newCards = t:filterValuesInArray(newCards, { newCards[idx], newCards[idx + 1] })
+      print('----con lai ')
+      for k = 1, #newCards do
+        print('- ', newCards[k]['val'])
+      end
+      print('---end')
     else
       idx = idx + 1
     end

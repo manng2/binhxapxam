@@ -13,6 +13,9 @@ local TYPES = {
   'thungPhaSanh', 'tuQuy', 'cuLu', 'thung', 'sanh', 'samCo', 'thu', 'doi',
   'mauThau'
 }
+local TOITRANG_TYPES = {
+  'lienMinhTocRong', 'lienMinhRong', 'dongHoa', 'namDoiMotSam', 'haiPhayNamThung', 'haiPhayNamSanh', 'sauDoi'
+}
 
 local tuQuyChiOne = 8
 local sanhChiOne = 10
@@ -130,15 +133,15 @@ local function writeResults(content)
   io.close(file)
 end
 
-local function isOneBiggerThanTwo(one, two)
+local function isOneBiggerThanTwo(one, two, types)
   local saveIdxOne = 0
   local saveIdxTwo = 0
 
-  for i = 1, #TYPES do
-    if TYPES[i] == one then
+  for i = 1, #types do
+    if types[i] == one then
       saveIdxOne = i
     end
-    if TYPES[i] == two then
+    if types[i] == two then
       saveIdxTwo = i
     end
   end
@@ -201,7 +204,7 @@ local function soTungChi(myCards, myTypes, oppCards, oppTypes)
         score = score - calculateValue(oppTypes[i], i)
         countOpp = countOpp + 1
       end
-    elseif isOneBiggerThanTwo(myTypes[i], oppTypes[i]) then
+    elseif isOneBiggerThanTwo(myTypes[i], oppTypes[i], TYPES) then
       score = score + calculateValue(myTypes[i], i)
       countMy = countMy + 1
     else
@@ -227,6 +230,13 @@ local function handleToiTrang(results, chiTypes, myCards)
   end
 end
 
+local function findBinhLung(results)
+  local cardsChoiced = results[1]
+  local result = { cardsChoiced[6], cardsChoiced[7], cardsChoiced[8], cardsChoiced[9], cardsChoiced[10], cardsChoiced[1], cardsChoiced[2], cardsChoiced[3], cardsChoiced[4], cardsChoiced[5], cardsChoiced[11], cardsChoiced[12], cardsChoiced[13] }
+
+  return result
+end
+
 local function writeEventsToFile(results, chiTypes, scores)
   for i = 1, #results do
     local text = readableData(results[i], chiTypes[i], scores[i])
@@ -238,6 +248,8 @@ local function handleFindFinalResult(results, chiTypes, scores, cards, saveIdx, 
   local kq = specialCase:soToiTrang(cards)
   local text = ''
 
+  text = readableData(results[saveIdx], chiTypes[saveIdx], saveScore)
+
   if (kq ~= nil) then
     if (kq[2] >= saveScore) then
       text = readableData(kq[1], { kq[3], kq[3], kq[3] }, kq[2])
@@ -246,8 +258,57 @@ local function handleFindFinalResult(results, chiTypes, scores, cards, saveIdx, 
     end
   end
 
+  if (saveScore < -6) then
+    local binhLung = findBinhLung(results)
+    text = readableData(binhLung, { 'binhLung', 'binhLung', 'binhLung' }, -6)
+  end
+
   writeResults(text)
 
+end
+
+local function isToiTrang(types)
+  if (t:hasValue(TOITRANG_TYPES, types[1])) then
+    return true
+  end
+
+  return false
+end
+
+local function handleOppToiTrang(oppType, cards)
+  local kq = specialCase:soToiTrang(cards)
+
+  if (kq ~= nil) then
+    if oppType == kq[3] or (isOneBiggerThanTwo(kq[3], oppType, TOITRANG_TYPES)) then
+      return { kq[1], kq[3] }
+    end
+  end
+
+  return nil
+end
+
+local function findToiTrangScore(type)
+  if (type == 'lienMinhTocRong') then
+    return LIEN_MINH_TOC_RONG
+  end
+  if (type == 'lienMinhRong') then
+    return LIEN_MINH_RONG
+  end
+  if (type == 'dongHoa') then
+    return DONG_HOA
+  end
+  if (type == 'namDoiMotSam') then
+    return NAM_DOI_MOT_SAM
+  end
+  if (type == 'haiPhayNamThung') then
+    return HAI_PHAY_NAM_THUNG
+  end
+  if (type == 'haiPhayNamSanh') then
+    return HAI_PHAY_NAM_SANH
+  end
+  if (type == 'sauDoi') then
+    return SAU_DOI
+  end
 end
 
 function Find:findCards(cards, oppCards, oppTypes)
@@ -259,8 +320,6 @@ function Find:findCards(cards, oppCards, oppTypes)
   local chiOneType = oppTypes[1]
   local chiTwoType = oppTypes[2]
   local chiThreeType = oppTypes[3]
-
-  local idxChiOneOpp = findIndexInTypes(chiOneType)
 
   for i = 1, #TYPES do
     local currentKind = findCurrentKindInNewVersion(TYPES[i], cards)
@@ -290,6 +349,27 @@ function Find:findCards(cards, oppCards, oppTypes)
         end
       end
     end
+  end
+
+  print('opp Cards: ')
+  for i = 1, #oppCards do
+    print(oppCards[i]['val'])
+  end
+
+  if isToiTrang(oppTypes) then
+    local curr = handleOppToiTrang(oppTypes[1], cards)
+    local text = ''
+
+    if (curr == nil) then
+      local binhLung = findBinhLung(results)
+      text = readableData(binhLung, { 'binhLung', 'binhLung', 'binhLung' }, -6)
+    else
+      text = readableData(curr[1], { curr[2], curr[2], curr[2] }, findToiTrangScore(curr[2]))
+    end
+
+    writeResults(text)
+
+    return
   end
 
   local saveScore = -1000

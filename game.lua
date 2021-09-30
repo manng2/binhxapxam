@@ -1671,20 +1671,32 @@ end
 local function handleFindFinalResult(results, chiTypes, scores, array, saveIdx, saveScore)
     local kq = specialCase:soToiTrang((array))
     local text = ''
+    local RESULT = t:shallowCopy(results[saveIdx])
+    local types = t:shallowCopy(chiTypes[saveIdx])
 
-    text = readableData(results[saveIdx], chiTypes[saveIdx], saveScore)
+    text = readableData(RESULT, types, saveScore)
 
     if (kq ~= nil) then
-        if (kq[2] >= saveScore) then
+        local scoreToiTrang = countValue:toiTrang(kq[3])
+        -- print('scoreToiTrang', scoreToiTrang)
+        -- print('saveScore', saveScore)
+
+        if (scoreToiTrang >= saveScore) then
             table.insert(results, kq[1])
             table.insert(chiTypes, { kq[3], kq[3], kq[3] })
-            table.insert(scores, kq[2])
+            table.insert(scores, scoreToiTrang)
 
-            text = readableData(kq[1], { kq[3], kq[3], kq[3] }, kq[2])
+            RESULT = t:shallowCopy(kq[1])
+            types = t:shallowCopy({ kq[3], kq[3], kq[3] })
+            saveScore = scoreToiTrang
+
+            text = readableData(kq[1], { kq[3], kq[3], kq[3] }, scoreToiTrang)
         end
     end
 
     writeResults(text)
+
+    return { RESULT, types, saveScore }
 end
 
 function Game:play(array)
@@ -1731,11 +1743,11 @@ function Game:play(array)
     RESULT = results[saveIdx]
 
 
-    handleFindFinalResult(results, chiTypes, scores, array, saveIdx, saveScore)
+    local finalResult = handleFindFinalResult(results, chiTypes, scores, array, saveIdx, saveScore)
 
     writeEventsToFile(results, chiTypes, scores)
 
-    return { RESULT, chiTypes[saveIdx], saveScore }
+    return finalResult
 end
 
 return Game
