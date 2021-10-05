@@ -316,7 +316,7 @@ function Count:thung(array, index)
       copyThungMax[3] = copyThungMax[2] - 1
       copyThungMax[4] = copyThungMax[3] - 1
       copyThungMax[5] = copyThungMax[4] - 1
-      
+
       distance = distance + 1
     end
   end
@@ -448,11 +448,30 @@ function Count:thu(array, index)
     stepInit = thuInitStepChiTwo
   end
   
+  print('value ar')
+  for i = 1, #newArray do
+    print(newArray[i]['val'])
+  end
+
   local sortedArray = p:sortThu(newArray)
+  -- local sortedArray = t:shallowCopy(newArray)
   local copyThuMax = t:shallowCopy(thuMax)
+  print('value ar')
+  for i = 1, #sortedArray do
+    print(sortedArray[i]['val'])
+  end
   local copyValueArray = copyArrayValue(sortedArray)
   local distance = 0
 
+  print('thu max', index)
+  for i = 1, #copyThuMax do
+    print(copyThuMax[i])
+  end
+
+  print('value ar')
+  for i = 1, #copyValueArray do
+    print(copyValueArray[i])
+  end
   while checkIsMatching(copyThuMax, copyValueArray) ~= true do
   -- print(copyThuMax[1], copyThuMax[2], copyThuMax[3], copyThuMax[4], copyThuMax[5])
     if copyThuMax[5] - 1 >= 2 then
@@ -596,13 +615,14 @@ function Count:doi5(array, index)
     print(nextX[i])
   end
   for i = 1, #copyValueArray do
+    -- print('ooo')
     print(copyValueArray[i])
   end
   print(#nextX, #copyValueArray)
   while checkIsMatching(nextX, copyValueArray) ~= true do
+    -- print('dst', distance)
     distance = distance + 1
     nextX = Count:findNextInDoi5(copydoi5Max)
-
   end
 
   -- return distance

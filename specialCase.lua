@@ -309,8 +309,9 @@ local function handle3Doi3Doi(doiCards, currentCards)
   local chiOne = { doiCards[1], doiCards[2] }
   local chiTwo = { doiCards[3], doiCards[4] }
   local chiThree = { doiCards[5], doiCards[6] }
+  local types = { 'doi', 'doi', 'doi' }
 
-  local arrayAfterFillRacs = p:divideRacsTo3Chi(chiOne, chiTwo, chiThree, currentCards)
+  local arrayAfterFillRacs = p:divideRacsTo3Chi(chiOne, chiTwo, chiThree, currentCards, types)
 
   chiOne = arrayAfterFillRacs[1]
   chiTwo = arrayAfterFillRacs[2]
@@ -319,7 +320,6 @@ local function handle3Doi3Doi(doiCards, currentCards)
   print(#chiOne, #chiTwo, #chiThree)
   -- os.exit()
   local converted = convertChiToResult(chiOne, chiTwo, chiThree)
-  local types = { 'doi', 'doi', 'doi' }
   local result = { converted, types }
 
   -- for i = 1, #converted do
@@ -337,15 +337,15 @@ local function handle3Doi1Thu1Doi(doiCards, currentCards)
   local chiOne = { doiCards[3], doiCards[4], doiCards[5], doiCards[6] }
   local chiTwo = { doiCards[1], doiCards[2] }
   local chiThree = { }
+  local types = { 'thu', 'doi', 'mauThau' }
 
-  local arrayAfterFillRacs = p:divideRacsTo3Chi(chiOne, chiTwo, chiThree, currentCards)
+  local arrayAfterFillRacs = p:divideRacsTo3Chi(chiOne, chiTwo, chiThree, currentCards, types)
 
   chiOne = arrayAfterFillRacs[1]
   chiTwo = arrayAfterFillRacs[2]
   chiThree = arrayAfterFillRacs[3]
 
   local converted = convertChiToResult(chiOne, chiTwo, chiThree)
-  local types = { 'thu', 'doi', 'mauThau' }
   local result = { converted, types }
   -- for i = 1, #converted do
   --   print(converted[i]['val'])
