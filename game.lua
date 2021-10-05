@@ -1400,84 +1400,91 @@ local function handleFromTopToBottomSamCo(chiOne, currentCards, results,
                 local afterCurrentCards =
                     t:filterValuesInArray(currentCards, chiTwo)
 
-                for k = i, #TYPES do
-                    local theLast = findCurrentKindInNewVersion(TYPES[k],
-                                                                afterCurrentCards)
+                -- COMMENT THIS BECAUSE HANDLE CHI THREE STEP BY STEP
 
-                    if #theLast > 0 then
-                        for l = 1, #theLast do
-                            local chiThree = theLast[l]
-                            if #chiThree > 3 then
-                                break
-                            end
-                            print('len chiThree: ', #chiThree, TYPES[k])
-                            local racs =
-                                t:filterValuesInArray(afterCurrentCards,
-                                                      chiThree)
-                            racs = t:sortDesc(racs)
-                            local types = {
-                                'samCo', TYPES[i], TYPES[k]
-                            }
+                -- for k = i, #TYPES do
+                --     local theLast = findCurrentKindInNewVersion(TYPES[k],
+                --                                                 afterCurrentCards)
 
-                            local arrayAfterFillRacs = p:divideRacsTo3Chi(
-                                                           chiOne, chiTwo,
-                                                           chiThree, racs, types)
+                --     if #theLast > 0 then
+                --         for l = 1, #theLast do
+                --             local chiThree = theLast[l]
+                --             if #chiThree > 3 then
+                --                 break
+                --             end
+                --             print('len chiThree: ', #chiThree, TYPES[k])
+                --             local racs =
+                --                 t:filterValuesInArray(afterCurrentCards,
+                --                                       chiThree)
+                --             racs = t:sortDesc(racs)
+                --             local types = {
+                --                 'samCo', TYPES[i], TYPES[k]
+                --             }
 
-                            if #arrayAfterFillRacs > 0 then
-                                chiOne = arrayAfterFillRacs[1]
-                                chiTwo = arrayAfterFillRacs[2]
-                                chiThree = arrayAfterFillRacs[3]
+                --             local arrayAfterFillRacs = p:divideRacsTo3Chi(
+                --                                            chiOne, chiTwo,
+                --                                            chiThree, racs, types)
 
-                                if (TYPES[i] == 'samCo') then
-                                    if compare:isFirstStronger(chiOne, chiTwo,
-                                                               'samCo') then
-                                        local converted = convertChiToResult(
-                                                              chiOne, chiTwo,
-                                                              chiThree)
-                                        -- local types = {
-                                        --     'samCo', TYPES[i], TYPES[k]
-                                        -- }
+                --             if #arrayAfterFillRacs > 0 then
+                --                 chiOne = arrayAfterFillRacs[1]
+                --                 chiTwo = arrayAfterFillRacs[2]
+                --                 chiThree = arrayAfterFillRacs[3]
 
-                                        if p:isResultValid(chiOne, chiTwo,
-                                                           chiThree, types) then
-                                            table.insert(results, converted)
-                                            table.insert(chiTypes, types)
-                                        end
-                                    end
-                                else
-                                    local converted =
-                                        convertChiToResult(chiOne, chiTwo,
-                                                           chiThree)
-                                    local types = {'samCo', TYPES[i], TYPES[k]}
-                                    if p:isResultValid(chiOne, chiTwo, chiThree,
-                                                       types) then
-                                        table.insert(results, converted)
-                                        table.insert(chiTypes, types)
-                                    end
-                                end
+                --                 if (TYPES[i] == 'samCo') then
+                --                     if compare:isFirstStronger(chiOne, chiTwo,
+                --                                                'samCo') then
+                --                         local converted = convertChiToResult(
+                --                                               chiOne, chiTwo,
+                --                                               chiThree)
+                --                         -- local types = {
+                --                         --     'samCo', TYPES[i], TYPES[k]
+                --                         -- }
 
-                                chiTwo = t:shallowCopy(saveTmpChiTwo)
-                                chiOne = t:shallowCopy(saveTmpChiOne)
-                            end
-                        end
-                    end
+                --                         if p:isResultValid(chiOne, chiTwo,
+                --                                            chiThree, types) then
+                --                             table.insert(results, converted)
+                --                             table.insert(chiTypes, types)
+                --                         end
+                --                     end
+                --                 else
+                --                     local converted =
+                --                         convertChiToResult(chiOne, chiTwo,
+                --                                            chiThree)
+                --                     local types = {'samCo', TYPES[i], TYPES[k]}
+                --                     if p:isResultValid(chiOne, chiTwo, chiThree,
+                --                                        types) then
+                --                         table.insert(results, converted)
+                --                         table.insert(chiTypes, types)
+                --                     end
+                --                 end
 
-                    -- handle truong hop mau thau
-                    -- if compare:isFirstStronger(chiOne, chiTwo, 'samCo') then
-                        p:handleChiThreeMauThau(chiOne, chiTwo, 'samCo',
-                                                TYPES[i], afterCurrentCards,
-                                                results, chiTypes, scores)
-                        if (TYPES[k] ~= 'doi' and TYPES[k] ~= 'mauThau') then
-                            p:handleChiThreeSamCo(chiOne, chiTwo, 'samCo', TYPES[i], afterCurrentCards, results, chiTypes, scores)
-                        end
-                        if (TYPES[k] ~= 'mauThau') then
-                            p:handleChiThreeDoi(chiOne, chiTwo, 'samCo', TYPES[i], afterCurrentCards, results, chiTypes, scores)
-                        end
-                    -- end
-                    chiTwo = t:shallowCopy(saveTmpChiTwo)
-                    chiOne = t:shallowCopy(saveTmpChiOne)
+                --                 chiTwo = t:shallowCopy(saveTmpChiTwo)
+                --                 chiOne = t:shallowCopy(saveTmpChiOne)
+                --             end
+                --         end
+                --     end
 
-                end
+                --     -- handle truong hop mau thau
+                --     -- if compare:isFirstStronger(chiOne, chiTwo, 'samCo') then
+                --         p:handleChiThreeMauThau(chiOne, chiTwo, 'samCo',
+                --                                 TYPES[i], afterCurrentCards,
+                --                                 results, chiTypes, scores)
+                --         if (TYPES[k] ~= 'doi' and TYPES[k] ~= 'mauThau') then
+                --             p:handleChiThreeSamCo(chiOne, chiTwo, 'samCo', TYPES[i], afterCurrentCards, results, chiTypes, scores)
+                --         end
+                --         if (TYPES[k] ~= 'mauThau') then
+                --             p:handleChiThreeDoi(chiOne, chiTwo, 'samCo', TYPES[i], afterCurrentCards, results, chiTypes, scores)
+                --         end
+                --     -- end
+                --     chiTwo = t:shallowCopy(saveTmpChiTwo)
+                --     chiOne = t:shallowCopy(saveTmpChiOne)
+
+                -- end
+                p:handleChiThreeMauThau(chiOne, chiTwo, 'samCo', TYPES[i], afterCurrentCards, results, chiTypes, scores)
+                p:handleChiThreeSamCo(chiOne, chiTwo, 'samCo', TYPES[i], afterCurrentCards, results, chiTypes, scores)
+                p:handleChiThreeDoi(chiOne, chiTwo, 'samCo', TYPES[i], afterCurrentCards, results, chiTypes, scores)
+                chiTwo = t:shallowCopy(saveTmpChiTwo)
+                chiOne = t:shallowCopy(saveTmpChiOne)
             end
         end
     end
@@ -1733,6 +1740,23 @@ local function handleFindFinalResult(results, chiTypes, scores, array, saveIdx, 
     return { RESULT, types, saveScore }
 end
 
+local function handleBlackTableCase(array, results, chiTypes, scores)
+    -- BECAUSE OF SAM CO IS HANDLED IN THE PAST SO WE CAN IGNORE IT
+
+    for i = 7, #TYPES - 1 do
+        local currentKind = findCurrentKindInNewVersion(TYPES[i], array)
+
+        if (#currentKind) > 0 then
+            for j = 1, #currentKind do
+                local chiOne = currentKind[j]
+                local currentCards = t:filterValuesInArray(array, chiOne)
+
+                handleFromTopToBottom(TYPES[i], chiOne, currentCards, results, chiTypes, scores)
+            end
+        end
+    end
+end
+
 function Game:play(array)
     local results = {}
     local chiTypes = {}
@@ -1748,10 +1772,12 @@ function Game:play(array)
     Game:findResults(array, results, chiTypes, scores)
 
     -- [START] HANDLE SPECIAL CASE ZONE
-
     handleSpecialCase(array, results, chiTypes, scores)
-
     -- [END] HANDLE SPECIAL CASE ZONE
+
+    -- [START] HANDLE BLACK CASE
+    handleBlackTableCase(array, results, chiTypes, scores)
+    -- [END] HANDLE BLACK CASE
 
     for i = 1, #results do
         local score = calculateResultValue(results[i], chiTypes[i])

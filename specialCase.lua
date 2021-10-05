@@ -42,6 +42,8 @@ local function isLonXon(array, startNumber)
         return true
       end
     end
+  else
+    return true
   end
 
   return false
@@ -226,7 +228,7 @@ function Special:checkIsManyDoi(array, numberDoi)
   for i = 1, #(array) - 1 do
     for j = i + 1, #(array) do
       if (array[j]['val'] == array[i]['val']) and t:hasValue(saveValues, array[j]['val']) ~= true then
-        print(array[i]['val'])
+        print('add ', array[i]['val'])
         table.insert(saveValues, array[i]['val'])
         table.insert(saveCards, array[i])
         table.insert(saveCards, array[j])
@@ -718,6 +720,16 @@ function Special:soToiTrang(myCards)
   end
 
   return nil
+end
+
+function Special:checkChiTwoIsQKA(chi)
+  local doiValue = p:findDoiValue(chi)
+
+  if (doiValue == 12 or doiValue == 13 or doiValue == 14) then
+    return true
+  end
+
+  return false
 end
 
 
