@@ -1100,4 +1100,31 @@ function PreHandle:findDoiValue(chi)
     end
 end
 
+function PreHandle:handleChiTwoAndThreeMauThau(chiOne, typeChiOne, currentCards, results, chiTypes)
+    local chiTwo = {}
+    local chiThree = {}
+    local saveTmpChiTwo = {}
+    local saveTmpChiThree = {}
+
+    for i = 1, #currentCards do
+        if t:hasValue(saveTmpChiThree, currentCards[i]['val']) ~= true then
+            table.insert(chiThree, currentCards[i])
+            table.insert(saveTmpChiThree, currentCards[i]['val'])
+        elseif t:hasValue(saveTmpChiTwo, currentCards[i]['val']) ~= true then
+            table.insert(chiTwo, currentCards[i])
+            table.insert(saveTmpChiTwo, currentCards[i]['val'])
+        else
+            return
+        end
+    end
+
+    if PreHandle:isThung(chiTwo) and PreHandle:isThung(chiThree) then
+        local converted = convertChiToResult(chiOne, chiTwo, chiThree)
+        local types = { typeChiOne, 'mauThau', 'mauThau' }
+
+        table.insert(results, converted)
+        table.insert(chiTypes, types)
+    end
+end
+
 return PreHandle

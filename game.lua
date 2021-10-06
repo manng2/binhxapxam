@@ -933,6 +933,7 @@ local function handleFromTopToBottom(currentType, chiOne, currentCards, results,
         end
     end
 
+    p:handleChiTwoAndThreeMauThau(chiOne, currentType, currentCards, results, chiTypes)
     -- if currentType == 'cuLu' then
     --     os.exit()
     -- end
@@ -1129,6 +1130,9 @@ local function handleFromTopToBottomTuQuy(chiOne, currentCards, results,
             end
         end
     end
+
+    p:handleChiTwoAndThreeMauThau(chiOne, 'tuQuy', currentCards, results, chiTypes)
+
 end
 
 function Game:handleChiOneTuQuy(chiOne, currentCards, results, chiTypes, scores)
@@ -1488,6 +1492,9 @@ local function handleFromTopToBottomSamCo(chiOne, currentCards, results,
             end
         end
     end
+
+    p:handleChiTwoAndThreeMauThau(chiOne, 'samCo', currentCards, results, chiTypes)
+
 end
 
 function Game:handleChiOneSamCo(chiOne, currentCards, results, chiTypes, scores)
