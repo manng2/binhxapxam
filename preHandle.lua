@@ -995,6 +995,10 @@ function PreHandle:handleChiThreeMauThau(chiOne, chiTwo, typeChiOne, typeChiTwo,
     print('3-----')
 
     local converted = convertChiToResult(copyChiOne, copyChiTwo, chiThree)
+    -- if (typeChiOne == 'thu') then
+    --     print('vai lz', typeChiOne, typeChiTwo)
+    --     os.exit()
+    -- end
     local types = { typeChiOne, typeChiTwo, PreHandle:checkType(chiThree) }
 
     table.insert(results, converted)
@@ -1101,30 +1105,52 @@ function PreHandle:findDoiValue(chi)
 end
 
 function PreHandle:handleChiTwoAndThreeMauThau(chiOne, typeChiOne, currentCards, results, chiTypes)
-    local chiTwo = {}
-    local chiThree = {}
-    local saveTmpChiTwo = {}
-    local saveTmpChiThree = {}
+    local copyCurrentCards = t:sortDesc(currentCards)
 
-    for i = 1, #currentCards do
-        if t:hasValue(saveTmpChiThree, currentCards[i]['val']) ~= true then
-            table.insert(chiThree, currentCards[i])
-            table.insert(saveTmpChiThree, currentCards[i]['val'])
-        elseif t:hasValue(saveTmpChiTwo, currentCards[i]['val']) ~= true then
-            table.insert(chiTwo, currentCards[i])
-            table.insert(saveTmpChiTwo, currentCards[i]['val'])
-        else
+    local chiTwo = { copyCurrentCards[1] }
+    local chiThree = { copyCurrentCards[2] }
+    local saveTmpChiTwo = { copyCurrentCards[1]['val'] }
+    local saveTmpChiThree = { copyCurrentCards[2]['val'] }
+    local isValid = saveTmpChiTwo[1] ~= saveTmpChiThree[1]
+
+    copyCurrentCards = t:filterValuesInArray(copyCurrentCards, chiTwo)
+    copyCurrentCards = t:filterValuesInArray(copyCurrentCards, chiThree)
+
+    while (isValid ~= true) do
+        if #chiThree == 3 then
             return
+        end
+
+        table.insert(chiTwo, copyCurrentCards[1])
+        table.insert(saveTmpChiTwo, copyCurrentCards[1]['val'])
+
+        table.insert(chiThree, copyCurrentCards[2])
+        table.insert(saveTmpChiThree, copyCurrentCards[2]['val'])
+
+        local saveTmp = { copyCurrentCards[1], copyCurrentCards[2] }
+
+        copyCurrentCards = t:filterValuesInArray(copyCurrentCards, saveTmp)
+        isValid = copyCurrentCards[1]['val'] ~= copyCurrentCards[2]['val']
+    end
+
+    local arrayAfterFillRacs = PreHandle:divideRacsTo3Chi(chiOne, chiTwo, chiThree, copyCurrentCards, { typeChiOne, 'mauThau', 'mauThau' })
+
+    if (#arrayAfterFillRacs == 0) then
+        return
+    else
+        -- local newChiOne = arrayAfterFillRacs[1]
+        local newChiTwo = arrayAfterFillRacs[2]
+        -- local newChiThree = arrayAfterFillRacs[3]
+
+        if PreHandle:isThung(newChiTwo) ~= true then
+            local converted = convertChiToResult(arrayAfterFillRacs[1], arrayAfterFillRacs[2], arrayAfterFillRacs[3])
+            local types = { typeChiOne, 'mauThau', 'mauThau' }
+
+            table.insert(results, converted)
+            table.insert(chiTypes, types)
         end
     end
 
-    if PreHandle:isThung(chiTwo) and PreHandle:isThung(chiThree) then
-        local converted = convertChiToResult(chiOne, chiTwo, chiThree)
-        local types = { typeChiOne, 'mauThau', 'mauThau' }
-
-        table.insert(results, converted)
-        table.insert(chiTypes, types)
-    end
 end
 
 return PreHandle

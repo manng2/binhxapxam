@@ -447,13 +447,12 @@ function Count:thu(array, index)
     maxInit = thuInitPointChiTwo
     stepInit = thuInitStepChiTwo
   end
-  
-  print('value ar')
-  for i = 1, #newArray do
-    print(newArray[i]['val'])
-  end
 
+  -- print('array ne: ', #newArray)
   local sortedArray = p:sortThu(newArray)
+  -- local sortedArray = t:shallowCopy(newArray)
+  -- print('array ne: ', #sortedArray)
+
   -- local sortedArray = t:shallowCopy(newArray)
   local copyThuMax = t:shallowCopy(thuMax)
   print('value ar')
@@ -468,7 +467,7 @@ function Count:thu(array, index)
     print(copyThuMax[i])
   end
 
-  print('value ar')
+  print('value ar', index)
   for i = 1, #copyValueArray do
     print(copyValueArray[i])
   end

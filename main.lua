@@ -7,12 +7,12 @@ array = {
   { color = 0, val = 12, att = 2 }, --
   { color = 1, val = 12, att = 3 }, --
   { color = 0, val = 12, att = 1 }, --
-  { color = 1, val = 12, att = 4 }, --
+  { color = 1, val = 10, att = 4 }, --
   { color = 0, val = 9, att = 2 }, --
   { color = 0, val = 9, att = 1 },
-  { color = 1, val = 9, att = 4 }, --
-  { color = 1, val = 9, att = 3 },
-  { color = 1, val = 4, att = 4 }, --
+  { color = 1, val = 8, att = 4 }, --
+  { color = 1, val = 8, att = 3 },
+  { color = 0, val = 8, att = 1 }, --
   { color = 0, val = 3, att = 2 }, --
   { color = 0, val = 2, att = 1 }, --
   { color = 1, val = 2, att = 4 }, --

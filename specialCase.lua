@@ -93,38 +93,104 @@ local function convertChiToResult(chiOne, chiTwo, chiThree)
   return result
 end
 
+-- DEPRECATED
+
 -- 14 14 14 13 13 13 ...
-function Special:checkIsMauThauXivaGia(array)
+-- function Special:checkIsMauThauXivaGia(array)
+--   local newArray = t:sortDesc(array)
+
+--   if (
+--     newArray[1]['val'] == 14 and
+--     newArray[2]['val'] == 14 and
+--     newArray[3]['val'] == 14 and
+--     newArray[4]['val'] == 13 and
+--     newArray[5]['val'] == 13 and
+--     newArray[6]['val'] == 13
+--   ) then
+--     return isLonXon(newArray, 7)
+--   end
+
+--   return false
+-- end
+
+-- function Special:mauThauXivaGia(array, results, chiTypes, scores)
+--   local newArray = t:sortDesc(array)
+
+--   local chiOne = { newArray[1], newArray[4], newArray[7], newArray[12], newArray[13]}
+--   local chiTwo = { newArray[2], newArray[5], newArray[8], newArray[10], newArray[11]}
+--   local chiThree = { newArray[3], newArray[6], newArray[9]}
+
+--   local chiType = { 'mauThau', 'mauThau', 'mauThau' }
+--   local converted = convertChiToResult(chiOne, chiTwo, chiThree)
+
+--   table.insert(results, converted)
+--   table.insert(chiTypes, chiType)
+-- end
+
+function Special:checkIsThreeMauThau(array)
   local newArray = t:sortDesc(array)
 
-  if (
-    newArray[1]['val'] == 14 and
-    newArray[2]['val'] == 14 and
-    newArray[3]['val'] == 14 and
-    newArray[4]['val'] == 13 and
-    newArray[5]['val'] == 13 and
-    newArray[6]['val'] == 13
-  ) then
-    return isLonXon(newArray, 7)
+  local samCoArray = p:findBaHoacBon(array, false)
+  local doiArray = p:findDoi(array)
+
+  if (#samCoArray > 1) then
+    return false
+  elseif #samCoArray == 1 then
+    local samCo = samCoArray[1]
+    newArray = t:filterValuesInArray(newArray, samCo)
+
+    return isLonXon(newArray, 1)
   end
 
-  return false
+  if (#doiArray ~= 2) then
+    return false
+  else
+    local doiArrays = t:mergeDataInTwoArray(doiArray[1], doiArray[2])
+    newArray = t:filterValuesInArray(newArray, doiArrays)
+
+    return isLonXon(newArray, 1)
+  end
+
 end
 
-function Special:mauThauXivaGia(array, results, chiTypes, scores)
+function Special:threeMauThau(array, results, chiTypes, scores)
   local newArray = t:sortDesc(array)
 
-  local chiOne = { newArray[1], newArray[4], newArray[7], newArray[12], newArray[13]}
-  local chiTwo = { newArray[2], newArray[5], newArray[8], newArray[10], newArray[11]}
-  local chiThree = { newArray[3], newArray[6], newArray[9]}
+  local samCoArray = p:findBaHoacBon(array, false)
+  local doiArray = p:findDoi(array)
 
-  local chiType = { 'mauThau', 'mauThau', 'mauThau' }
-  local converted = convertChiToResult(chiOne, chiTwo, chiThree)
+  local arrayAfterFillRacs = {}
 
-  table.insert(results, converted)
-  table.insert(chiTypes, chiType)
+  if (#samCoArray > 0) then
+    local samCo = samCoArray[1]
+    newArray = t:filterValuesInArray(newArray, samCo)
+
+    local chiOne = { samCo[1] }
+    local chiTwo = { samCo[2] }
+    local chiThree = { samCo[3] }
+
+    arrayAfterFillRacs = p:divideRacsTo3Chi(chiOne, chiTwo, chiThree, newArray, { 'mauThau', 'mauThau', 'mauThau' })
+  elseif (#doiArray > 0) then
+    local dois = t:mergeDataInTwoArray(doiArray[1], doiArray[2])
+    newArray = t:filterValuesInArray(newArray, dois)
+
+    local chiOne = { dois[1], dois[3] }
+    local chiTwo = { dois[2], dois[4] }
+    local chiThree = {}
+    arrayAfterFillRacs = p:divideRacsTo3Chi(chiOne, chiTwo, chiThree, newArray, { 'mauThau', 'mauThau', 'mauThau' })
+  end
+
+  if (#arrayAfterFillRacs > 0) then
+    local newChiOne = arrayAfterFillRacs[1]
+    local newChiTwo = arrayAfterFillRacs[2]
+    local newChiThree = arrayAfterFillRacs[3]
+
+    local converted = convertChiToResult(newChiOne, newChiTwo, newChiThree)
+    table.insert(results, converted)
+    table.insert(chiTypes, { 'mauThau', 'mauThau', 'mauThau' })
+  end
+
 end
-
 -- 3 lá giống nhau (2 -> 12)
 function Special:checkIsSamCoTu2Den12(array)
   local value3 = find3Value(array)

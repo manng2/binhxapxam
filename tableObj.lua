@@ -386,4 +386,24 @@ function T:findThungByColorAndAtt(array)
   return results
 end
 
+function T:compareTwoArray(arrayOne, arrayTwo)
+  print('VIEW ZONE')
+  for i = 1, #arrayOne do
+    print(arrayOne[i])
+  end
+  print('----')
+  for i = 1, #arrayTwo do
+    print(arrayTwo[i])
+  end
+
+  for i = 1, #arrayOne do
+    if (arrayOne[i] ~= arrayTwo[i]) then
+      -- os.exit()
+      return false
+    end
+  end
+
+  return true
+end
+
 return T

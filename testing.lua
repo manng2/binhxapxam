@@ -58,7 +58,7 @@ local chiThree = {
   { color = 1, val = 12, att = 4 }, --
 }
 
-print(p:isTuQuy(chiOne))
+-- print(p:isTuQuy(chiOne))
 -- local racs = t:filterValuesInArray(array, chiOne)
 -- racs = t:filterValuesInArray(racs, chiTwo)
 -- racs = t:filterValuesInArray(racs, chiThree)
