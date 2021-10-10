@@ -456,7 +456,7 @@ local function findCurrentKind(currentType, array)
     end
 end
 
-local function findNextKind(currentType, array)
+function Game:findNextKind(currentType, array)
     -- print('find next cua ', currentType, #(array))
     -- print('---------CURRENT CARDS IN NEXT----------')
     -- for i = 1, #(array) do
@@ -1015,7 +1015,7 @@ function Game:handleChiOneThungPhaSanh(chiOne, currentCards, results, chiTypes,
                           chiTypes, scores)
 end
 
-local function findCurrentKindInNewVersion(type, currentCards, isFindChiTwo)
+function Game:findCurrentKindInNewVersion(type, currentCards, isFindChiTwo)
     local currentKind = {}
 
     if type == 'thungPhaSanh' then
@@ -1048,7 +1048,7 @@ local function handleFromTopToBottomTuQuy(chiOne, currentCards, results,
 
     for i = 2, #TYPES - 1 do
         chiOne = t:shallowCopy(saveTmpChiOne)
-        local currentKind = findCurrentKindInNewVersion(TYPES[i], currentCards)
+        local currentKind = Game:findCurrentKindInNewVersion(TYPES[i], currentCards)
         print('len curr: ', #currentKind, TYPES[i])
         if #currentKind > 0 then
             for j = 1, #currentKind do
@@ -1060,7 +1060,7 @@ local function handleFromTopToBottomTuQuy(chiOne, currentCards, results,
                     t:filterValuesInArray(currentCards, chiTwo)
 
                 for k = i, #TYPES do
-                    local theLast = findCurrentKindInNewVersion(TYPES[k],
+                    local theLast = Game:findCurrentKindInNewVersion(TYPES[k],
                                                                 afterCurrentCards)
 
                     print('CHECK TIME', 'tuQuy', TYPES[i], TYPES[k], #theLast)
@@ -1398,7 +1398,7 @@ local function handleFromTopToBottomSamCo(chiOne, currentCards, results,
 
 
     for i = 7, #TYPES - 1 do
-        local currentKind = findCurrentKindInNewVersion(TYPES[i], currentCards)
+        local currentKind = Game:findCurrentKindInNewVersion(TYPES[i], currentCards)
         print('len curr: ', #currentKind, TYPES[i])
 
         if #currentKind > 0 then
@@ -1413,7 +1413,7 @@ local function handleFromTopToBottomSamCo(chiOne, currentCards, results,
                 -- COMMENT THIS BECAUSE HANDLE CHI THREE STEP BY STEP
 
                 -- for k = i, #TYPES do
-                --     local theLast = findCurrentKindInNewVersion(TYPES[k],
+                --     local theLast = Game:findCurrentKindInNewVersion(TYPES[k],
                 --                                                 afterCurrentCards)
 
                 --     if #theLast > 0 then
@@ -1679,7 +1679,7 @@ end
 
 function Game:findResults(array, results, chiTypes, scores)
     for i = 1, #TYPES - 3 do
-        local currentKind = findCurrentKindInNewVersion(TYPES[i], array)
+        local currentKind = Game:findCurrentKindInNewVersion(TYPES[i], array)
         print('[CHI ONE]', TYPES[i], #currentKind)
         if #currentKind > 0 then
             for j = 1, #currentKind do
@@ -1770,7 +1770,7 @@ local function handleFromTopToBottomBlackTable(currentType, chiOne, currentCards
 
     -- we only need to run to doi (mauThau will be handled later)
     for i = idx, #TYPES - 1 do
-        local currentKind = findCurrentKindInNewVersion(TYPES[i], currentCards)
+        local currentKind = Game:findCurrentKindInNewVersion(TYPES[i], currentCards)
 
         if (#currentKind) > 0 then
             for j = 1, #currentKind do
@@ -1824,7 +1824,7 @@ local function handleBlackTableCase(array, results, chiTypes, scores)
     local saveValue = {}
 
     for i = 7, #TYPES - 1 do
-        local currentKind = findCurrentKindInNewVersion(TYPES[i], array)
+        local currentKind = Game:findCurrentKindInNewVersion(TYPES[i], array)
 
         if (#currentKind) > 0 then
             for j = 1, #currentKind do
