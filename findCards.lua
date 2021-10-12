@@ -190,6 +190,13 @@ local function soTungChi(myCards, myTypes, oppCards, oppTypes)
   local countMy = 0
   local countOpp = 0
 
+  print('----cccc-----', myTypes[1], myTypes[2], myTypes[3])
+  for k = 1, #myCards do
+    print(myCards[k]['val'])
+  end
+  print('----cccc-----')
+
+
   local myCardsSplited = t:splitByChi(myCards)
   print('12xxxx', #oppCards)
   local oppCardsSplited = t:splitByChi(oppCards)
@@ -204,6 +211,18 @@ local function soTungChi(myCards, myTypes, oppCards, oppTypes)
 
   for i = 1, 3 do
     if (myTypes[i] == oppTypes[i]) then
+      print('hello', oppTypes[i])
+      for k = 1, #myCardsSplited[i] do
+        print(myCardsSplited[i][k]['val'])
+      end
+      print('----')
+
+      for l = 1, #oppCardsSplited[i] do
+        print(oppCardsSplited[i][l]['val'])
+      end
+      -- print(#myCardsSplited[i])
+      -- print(#oppCardsSplited[i])
+
       if c:isFirstStronger(myCardsSplited[i], oppCardsSplited[i], myTypes[i]) then
         score = score + calculateValue(myTypes[i], i)
         countMy = countMy + 1
@@ -396,6 +415,31 @@ local function findNextKind(currentType, array)
 
 end
 
+local function checkBinhLung(array)
+  local types = {
+    thungPhaSanh = 9,
+    tuQuy = 8,
+    cuLu = 7,
+    thung = 6,
+    sanh = 5,
+    samCo = 4,
+    thu = 3,
+    doi = 2,
+    mauThau = 1
+  }
+
+  -- hard code binh lung
+  if (#array ~= 3) then
+    return true
+  end
+
+  if types[array[1]] < types[array[2]] or types[array[2]] < types[array[3]] then
+    return true
+  else 
+    return false
+  end
+end
+
 local function findNextWithChiOne(results, chiOne, type, currentCards, chiType, chiTypes, scores, cards)
   local currentKind = {}
 
@@ -449,20 +493,20 @@ local function findNextWithChiOne(results, chiOne, type, currentCards, chiType, 
     chiThree = t:filterValuesInArray(currentCardsAfterTwo, chiTwo)
     table.insert(copyChiType, p:checkType(chiThree))
 
-    -- if checkBinhLung(copyChiType) ~= true then
+    if checkBinhLung(copyChiType) ~= true then
       local tmp = convertChiToResult(chiOne, chiTwo, chiThree)
 
       table.insert(results, tmp)
       table.insert(chiTypes, copyChiType)
-    -- end
+    end
     -- else 
       -- break
   end  
 end
 
 local function findResultsWithNewVersion(cards, results, chiTypes, scores)
-  for i = 1, #TYPES do
-    local currentKind = g:findCurrentKindInNewVersion(TYPES[i], cards)
+  for i = 1, #TYPES - 1 do
+    local currentKind = g:findCurrentKind(TYPES[i], cards)
     local tmp = t:shallowCopy(currentKind)
 
     for k = 1, #currentKind do
@@ -475,7 +519,7 @@ local function findResultsWithNewVersion(cards, results, chiTypes, scores)
       local chiThree = {}
       local currentCards = t:shallowCopy(cards)
       currentCards = t:filterValuesInArray(currentCards, chiOne)
-      tmpC = g:findCurrentKindInNewVersion(TYPES[i], currentCards)
+      tmpC = g:findCurrentKind(TYPES[i], currentCards)
 
       if (#tmpC) >= 1 then
         for j = 1, #tmpC do
@@ -493,7 +537,7 @@ local function findResultsWithNewVersion(cards, results, chiTypes, scores)
               if compare:isFirstStronger(chiTwo, chiThree, p:checkType(chiThree)) == true then
                   local tmp = convertChiToResult(chiOne, chiTwo, chiThree)
 
-                  table.insert(results, convertChiToResult(chiOne, chiTwo, chiThree))
+                  table.insert(results, tmp)
                   table.insert(chiTypes, copyChiType)
               end
             else
@@ -502,7 +546,7 @@ local function findResultsWithNewVersion(cards, results, chiTypes, scores)
               --   print(#(chiTwo))
               --   print(#(chiThree))
               -- end
-              -- if checkBinhLung(copyChiType) ~= true then
+              if checkBinhLung(copyChiType) ~= true then
                   local tmp = convertChiToResult(chiOne, chiTwo, chiThree)
                   -- local score = Game:countValue(chiOne, copyChiType[1], 1)
                   -- score = score + Game:countValue(chiTwo, copyChiType[2], 2)
@@ -510,8 +554,7 @@ local function findResultsWithNewVersion(cards, results, chiTypes, scores)
 
                   table.insert(results, tmp)
                   table.insert(chiTypes, copyChiType)
-                  -- table.insert(scores, score)
-              -- end
+              end
             end
           else
             break
@@ -521,7 +564,7 @@ local function findResultsWithNewVersion(cards, results, chiTypes, scores)
 
       for idx = findIndexOfType(TYPES[i], TYPES) + 1, #(TYPES) do
         chiType = { TYPES[i] }
-        findNextWithChiOne(results, chiOne, TYPES[idx], currentCards, chiType, chiTypes, scores, t:shallowCopy(array))
+        findNextWithChiOne(results, chiOne, TYPES[idx], currentCards, chiType, chiTypes, scores, t:shallowCopy(cards))
       end
     end
   end

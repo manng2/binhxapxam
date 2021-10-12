@@ -302,6 +302,13 @@ function Special:checkIsManyDoi(array, numberDoi)
     end
   end
 
+  -- if (numberDoi == 3) then
+  --   for i = 1, #saveCards do
+  --     print(saveCards[i]['val'])
+  --   end
+
+  --   os.exit()
+  -- end
   local currentCards = t:filterValuesInArray(array, saveCards)
 
   if isLonXon(currentCards, 1) then
@@ -381,20 +388,24 @@ local function handle3Doi3Doi(doiCards, currentCards)
 
   local arrayAfterFillRacs = p:divideRacsTo3Chi(chiOne, chiTwo, chiThree, currentCards, types)
 
-  chiOne = arrayAfterFillRacs[1]
-  chiTwo = arrayAfterFillRacs[2]
-  chiThree = arrayAfterFillRacs[3]
+  if (#arrayAfterFillRacs > 0) then
+    chiOne = arrayAfterFillRacs[1]
+    chiTwo = arrayAfterFillRacs[2]
+    chiThree = arrayAfterFillRacs[3]
 
-  print(#chiOne, #chiTwo, #chiThree)
-  -- os.exit()
-  local converted = convertChiToResult(chiOne, chiTwo, chiThree)
-  local result = { converted, types }
+    print(chiOne, chiTwo, chiThree)
+    -- os.exit()
+    local converted = convertChiToResult(chiOne, chiTwo, chiThree)
+    local result = { converted, types }
 
-  -- for i = 1, #converted do
-  --   print(converted[i]['val'])
-  -- end
-  -- os.exit()
-  return result
+    -- for i = 1, #converted do
+    --   print(converted[i]['val'])
+    -- end
+    -- os.exit()
+    return result
+  end
+
+  return
 end
 
 local function handle3Doi1Thu1Doi(doiCards, currentCards)
@@ -460,8 +471,10 @@ function Special:handle3Doi(array, results, chiTypes, scores)
   print('RESULTS 3doi', #finalResults)
 
   for i = 1, #finalResults do
-    table.insert(results, finalResults[i][1])
-    table.insert(chiTypes, finalResults[i][2])
+    if finalResults[i] ~= nil then
+      table.insert(results, finalResults[i][1])
+      table.insert(chiTypes, finalResults[i][2])
+    end
   end
 
   -- return results

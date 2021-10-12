@@ -897,15 +897,13 @@ function PreHandle:handleChiThreeDoi(chiOne, chiTwo, typeChiOne, typeChiTwo, aft
             local newChiTwo = arrayAfterFillRacs[2]
             local newChiThree = arrayAfterFillRacs[3]
 
-            local converted = convertChiToResult(newChiOne, newChiTwo, newChiThree)
-            print('---m---')
-            for i = 1, #converted do
-                print(converted[i]['val'], converted[i]['att'])
-            end
-            print('---m---')
+            if (c:isFirstStronger(newChiTwo, newChiThree, 'doi')) then
+                local converted = convertChiToResult(newChiOne, newChiTwo, newChiThree)
 
-            table.insert(results, converted)
-            table.insert(chiTypes, types)
+                table.insert(results, converted)
+                table.insert(chiTypes, types)
+            end
+
         end
     end
 end

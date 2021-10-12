@@ -645,7 +645,7 @@ function Count:doi3(array, index)
   local copydoi3Max = t:shallowCopy(doi3Max)
   local copyValueArray = copyArrayValue(sortedArray)
   local distance = 0
-  
+
    if copydoi3Max[1] ~= copyValueArray[1] then
     while copydoi3Max[1] ~= copyValueArray[1] or copydoi3Max[3] ~= copyValueArray[3] do
       if copydoi3Max[3] - 1 >= 2 then
