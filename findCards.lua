@@ -81,8 +81,13 @@ local function readableData(array, types, scores)
 
   -- hard code
   if #array ~= 13 or #types ~= 3 then
+    -- for i = 1, #array do
+    --   print(array[i]['val'], array[i]['att'])
+    -- end
+    -- os.exit()
     return 'error'
   end
+
   local result = tostring(scores) .. '| chi 3: ' .. types[3] .. ' | ' ..
                      'chi 2: ' .. types[2] .. ' | ' .. 'chi 1: ' .. types[1] ..
                      '\n'
@@ -441,6 +446,8 @@ local function checkBinhLung(array)
 end
 
 local function findNextWithChiOne(results, chiOne, type, currentCards, chiType, chiTypes, scores, cards)
+  -- print('currrr: ', #currentCards);
+  -- print('chi 1:', #chiOne)
   local currentKind = {}
 
   while #currentKind == 0 and type ~= 'mauThau' do
@@ -486,16 +493,25 @@ local function findNextWithChiOne(results, chiOne, type, currentCards, chiType, 
   for i = 1, #(currentKind) do
     local copyChiType = t:shallowCopy(chiType)
     local chiTwo = currentKind[i]
+    print('chi 2 :', #chiTwo)
+
     -- if c:isFirstStronger(chiOne, chiTwo) then
     table.insert(copyChiType, type)
     local chiThree = {}
     local currentCardsAfterTwo = t:shallowCopy(currentCards)
     chiThree = t:filterValuesInArray(currentCardsAfterTwo, chiTwo)
+    -- print('chi 3 :', #chiThree)
     table.insert(copyChiType, p:checkType(chiThree))
 
     if checkBinhLung(copyChiType) ~= true then
       local tmp = convertChiToResult(chiOne, chiTwo, chiThree)
 
+      -- if (#tmp ~= 13) then
+      --   print('########', #tmp)
+      --   print('########', copyChiType[1], copyChiType[2], copyChiType[3])
+
+      --   os.exit()
+      -- end
       table.insert(results, tmp)
       table.insert(chiTypes, copyChiType)
     end
@@ -518,7 +534,10 @@ local function findResultsWithNewVersion(cards, results, chiTypes, scores)
       local chiTwo = {}
       local chiThree = {}
       local currentCards = t:shallowCopy(cards)
+      print('currrrrrrr:', #currentCards, #chiOne)
       currentCards = t:filterValuesInArray(currentCards, chiOne)
+      print('currrrrssss:', #currentCards)
+
       tmpC = g:findCurrentKind(TYPES[i], currentCards)
 
       if (#tmpC) >= 1 then

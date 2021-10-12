@@ -323,6 +323,18 @@ function T:removeItemFromArray(array, item)
 end
 
 function T:filterValuesInArray(array, target)
+
+  print('RRAY: ')
+  for i = 1, #array do
+    print(array[i]['val'], array[i]['att'])
+  end
+  print('end')
+
+  print('target: ')
+  for i = 1, #target do
+    print(target[i]['val'], target[i]['att'])
+  end
+  print('end')
   local results = T:shallowCopy(array)
 
   for i = 1, #(target) do

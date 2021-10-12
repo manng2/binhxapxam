@@ -18,6 +18,7 @@ local function doi(firstArray, secondArray)
   local cardsDoiOne = {}
   local cardsDoiTwo = {}
 
+  print(#firstArray, #secondArray)
   for i = 1, #(firstArray) - 1 do
     for j = i + 1, #(firstArray) do
       if firstArray[i]['val'] == firstArray[j]['val'] then
@@ -47,7 +48,13 @@ local function doi(firstArray, secondArray)
   elseif cardsDoiOne[1]['val'] < cardsDoiTwo[1]['val'] then
     return false
   else
-    for i = 1, #(firstArray) do
+    local minLen = #firstArray
+
+    if (#secondArray < #firstArray) then
+      minLen = #secondArray
+    end
+
+    for i = 1, minLen do
       print(firstArray[i]['val'], secondArray[i]['val'])
       if firstArray[i]['val'] > secondArray[i]['val'] then
         return true
