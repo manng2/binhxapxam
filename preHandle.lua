@@ -241,13 +241,13 @@ function PreHandle:findSanh(array)
         end
     end
 
-    -- for i = 1, #(results) do
-    --   print('***************')
-    --   for j = 1, #(results[i]) do
-    --     print(results[i][j]['val'], results[i][j]['att'])
-    --   end
-    --   print('***************')
-    -- end
+    local revertResult = {}
+
+    for i = #results, 1, -1 do
+        table.insert(revertResult, results[i])
+    end
+
+    results = t:shallowCopy(revertResult)
 
     -- in case Xi
     local specialCase = findSanhWithXi(sortedArray)
@@ -758,10 +758,19 @@ function PreHandle:handleChiThreeSamCo(chiOne, chiTwo, typeChiOne, typeChiTwo, a
             local newChiTwo = arrayAfterFillRacs[2]
             local newChiThree = arrayAfterFillRacs[3]
 
-            local converted = convertChiToResult(newChiOne, newChiTwo, newChiThree)
+            if (typeChiTwo == 'samCo') then
+                if (c:isFirstStronger(newChiTwo, newChiThree, 'samCo')) then
+                    local converted = convertChiToResult(newChiOne, newChiTwo, newChiThree)
 
-            table.insert(results, converted)
-            table.insert(chiTypes, types)
+                    table.insert(results, converted)
+                    table.insert(chiTypes, types)
+                end
+            else
+                local converted = convertChiToResult(newChiOne, newChiTwo, newChiThree)
+
+                table.insert(results, converted)
+                table.insert(chiTypes, types)
+            end
         end
     end
 end
@@ -896,9 +905,17 @@ function PreHandle:handleChiThreeDoi(chiOne, chiTwo, typeChiOne, typeChiTwo, aft
             local newChiOne = arrayAfterFillRacs[1]
             local newChiTwo = arrayAfterFillRacs[2]
             local newChiThree = arrayAfterFillRacs[3]
+            local converted = nil
 
-            if (c:isFirstStronger(newChiTwo, newChiThree, 'doi')) then
-                local converted = convertChiToResult(newChiOne, newChiTwo, newChiThree)
+            if (typeChiTwo == 'doi') then
+                if (c:isFirstStronger(newChiTwo, newChiThree, 'doi')) then
+                    converted = convertChiToResult(newChiOne, newChiTwo, newChiThree)
+
+                    table.insert(results, converted)
+                    table.insert(chiTypes, types)
+                end
+            else
+                converted = convertChiToResult(newChiOne, newChiTwo, newChiThree)
 
                 table.insert(results, converted)
                 table.insert(chiTypes, types)
@@ -984,6 +1001,12 @@ function PreHandle:handleChiThreeMauThau(chiOne, chiTwo, typeChiOne, typeChiTwo,
 
     if (typeChiOne ~= PreHandle:checkType(copyChiOne)) then
         return
+    end
+
+    if (typeChiOne == typeChiTwo) then
+        if c:isFirstStronger(copyChiOne, copyChiTwo, typeChiOne) ~= true then
+            return
+        end
     end
 
     print('3-----')

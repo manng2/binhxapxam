@@ -632,14 +632,19 @@ function Special:findHaiPhayNamSanh(cards)
         for j = 1, #nextSanhArray do
           local chiTwo = nextSanhArray[j]
 
-          if c:isFirstStronger(chiOne, chiTwo, 'sanh') then
+          -- if c:isFirstStronger(chiOne, chiTwo, 'sanh') then
             local chiThree = t:filterValuesInArray(currentnewCards, chiTwo)
 
+            if (#chiThree == 3) then
+              for i = 1, #chiThree do
+                print(chiThree[i]['val'])
+              end
+            end
             if (chiThree[1]['val'] - chiThree[2]['val'] == 1 and chiThree[2]['val'] - chiThree[3]['val'] == 1) then
               result = convertChiToResult(chiOne, chiTwo, chiThree)
               return result
             end
-          end
+          -- end
         end
       end
     end
@@ -709,7 +714,7 @@ local function isNamDoiMotXam(cards)
   local doiArray = p:findDoi(newArray)
 
   -- because of has samCo so 6 is base value
-  if (#doiArray == 6) then
+  if (#doiArray == 5) then
     return true
   end
 

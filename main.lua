@@ -5,33 +5,33 @@
 
 array = {
   { color = 0, val = 14, att = 2 }, --
-  { color = 1, val = 13, att = 4 }, --
-  { color = 1, val = 12, att = 3 }, --
-  { color = 1, val = 11, att = 4 }, --
-  { color = 0, val = 11, att = 2 }, --
-  { color = 1, val = 10, att = 3 }, --
-  { color = 1, val = 9, att = 4 }, --
-  { color = 0, val = 9, att = 1 }, --
+  { color = 0, val = 13, att = 2 }, --
+  { color = 0, val = 12, att = 2 }, --
+  { color = 0, val = 10, att = 2 }, --
   { color = 0, val = 9, att = 2 }, --
-  { color = 1, val = 9, att = 3 }, --
-  { color = 1, val = 8, att = 3 },
-  { color = 0, val = 3, att = 1 }, --
-  { color = 1, val = 2, att = 3 },
+  { color = 1, val = 8, att = 4 }, --
+  { color = 1, val = 8, att = 3 }, --
+  { color = 0, val = 7, att = 1 }, --
+  { color = 0, val = 6, att = 2 }, --
+  { color = 0, val = 5, att = 2 }, --
+  { color = 0, val = 5, att = 1 },
+  { color = 1, val = 5, att = 3 },
+  { color = 0, val = 4, att = 2 }, --
 }
 
 myArray = {
-  { color = 1, val = 10, att = 4 }, --
-  { color = 1, val = 9, att = 4 }, --
-  { color = 0, val = 9, att = 2 },
-  { color = 0, val = 8, att = 1 }, --
-  { color = 1, val = 8, att = 3 },
+  { color = 1, val = 14, att = 4 }, --
+  { color = 1, val = 13, att = 4 }, --
+  { color = 0, val = 12, att = 2 },
+  { color = 0, val = 11, att = 1 }, --
+  { color = 1, val = 10, att = 3 },
+  { color = 1, val = 9, att = 1 },
   { color = 1, val = 8, att = 4 },
-  { color = 1, val = 7, att = 4 },
-  { color = 1, val = 6, att = 4 },
-  { color = 1, val = 5, att = 4 },
-  { color = 1, val = 3, att = 3 },
-  { color = 1, val = 2, att = 4 },
-  { color = 0, val = 2, att = 1 }, --
+  { color = 1, val = 7, att = 2 },
+  { color = 1, val = 6, att = 3 },
+  { color = 1, val = 5, att = 3 },
+  { color = 1, val = 4, att = 4 },
+  { color = 0, val = 3, att = 1 }, --
   { color = 0, val = 2, att = 2 },
 }
 
@@ -79,7 +79,7 @@ specialCase = Special:new()
 -- local results = g:findThungPhaSanh(array)
 -- local results = g:findTuQuy(array)
 -- local results = g:findCuLu(array)
--- local results = g:findThung(array)
+local results = g:findThung(array)
 -- local results = g:findSanh(array)
 -- local results = g:findSamCo(array)
 -- local results = g:findThu(array)
@@ -88,6 +88,7 @@ specialCase = Special:new()
 
 -- local results = p:findDoi(testArray)
 
+-- print(#results)
 -- print(#results)
 -- for i = 1, #results do
 --   print(results[i][1]['val'])

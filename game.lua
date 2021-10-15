@@ -27,6 +27,19 @@ local TYPES = {
     'mauThau'
 }
 
+local SPECIAL_TYPE = {
+    { 'thungPhaSanh', 'thungPhaSanh', 'samCo' },
+    { 'thungPhaSanh', 'tuQuy', 'samCo' },
+    { 'tuQuy', 'tuQuy', 'samCo' },
+    { 'tuQuy', 'cuLu', 'samCo' },
+    { 'cuLu', 'cuLu', 'samCo' },
+    { 'cuLu', 'thung', 'samCo' },
+    { 'thung', 'thung', 'samCo' },
+    { 'thung', 'sanh', 'samCo' },
+    { 'sanh', 'sanh', 'samCo' },
+    { 'sanh', 'samco', 'samCo' },
+}
+
 -- END RED ZONE
 
 local function isValidDoi(array, checkValue)
@@ -37,19 +50,6 @@ local function isValidDoi(array, checkValue)
 
     return count == 2
 end
-
--- local function isDoi(array)
---     local count = 1
---     for i = 1, #(array) - 1 do
---         for j = i + 1, #(array) do
---             if array[j]['val'] == array[i]['val'] then
---                 count = count + 1
---             end
---         end
---     end
-
---     return count == 2
--- end
 
 function Game:findDoi(array)
     local doiArray = p:findDoi(array)
@@ -920,9 +920,7 @@ local function handleFromTopToBottom(currentType, chiOne, currentCards, results,
                 local tmpChiTwo = t:shallowCopy(chiTwo)
                 local savePreCards = {}
 
-                p:handleChiThreeMauThau(chiOne, chiTwo, currentType, TYPES[i],
-                                        afterCurrentCards, results, chiTypes,
-                                        scores)
+                p:handleChiThreeMauThau(chiOne, chiTwo, currentType, TYPES[i], afterCurrentCards, results, chiTypes, scores)
                 if (TYPES[i] ~= 'doi' and TYPES[i] ~= 'mauThau') then
                     p:handleChiThreeSamCo(chiOne, chiTwo, currentType, TYPES[i], afterCurrentCards, results, chiTypes, scores)
                 end
@@ -944,7 +942,7 @@ local function handleFromTopToBottom(currentType, chiOne, currentCards, results,
 end
 
 function Game:handleChiOneThungPhaSanh(chiOne, currentCards, results, chiTypes,
-                                        scores)
+                                        scores, saveSpecialType)
     local currentKind = Game:findThungPhaSanh(currentCards)
     print('[CARDS] Co ', #currentKind, ' thungPhaSanh')
     if #(currentKind) > 0 then
@@ -957,14 +955,17 @@ function Game:handleChiOneThungPhaSanh(chiOne, currentCards, results, chiTypes,
                 local converted = convertChiToResult(chiOne, chiTwo, chiThree)
                 local typeThree = checkType(chiThree)
                 local types = {'thungPhaSanh', 'thungPhaSanh', typeThree}
-                saveTheLastTypes = {'tuQuy', 'tuQuy', typeThree}
+                saveTheLastTypes = {'thungPhaSanh', 'thungPhaSanh', typeThree}
 
                 table.insert(results, converted)
                 table.insert(chiTypes, types)
             end
         end
 
-        if (saveTheLastTypes[3] == 'samCo') then return end
+        if (saveTheLastTypes[3] == 'samCo') then
+            table.insert(saveSpecialType, saveTheLastTypes)
+            return
+        end
     else
         local tuquyArray = p:findBaHoacBon(currentCards, true)
 
@@ -985,11 +986,6 @@ function Game:handleChiOneThungPhaSanh(chiOne, currentCards, results, chiTypes,
                                                            samCoArray[j])
                     racCards = t:sortDesc(racCards)
 
-                    -- print('\nrac ne: ')
-                    -- for o = 1, #racCards do
-                    --   print(racCards[o]['val'])
-                    -- end
-
                     local chiTwo = {
                         tuquyArray[i][1], tuquyArray[i][2], tuquyArray[i][3],
                         tuquyArray[i][4], racCards[1]
@@ -999,12 +995,13 @@ function Game:handleChiOneThungPhaSanh(chiOne, currentCards, results, chiTypes,
                     local converted = convertChiToResult(chiOne, chiTwo,
                                                          chiThree)
                     local types = {'thungPhaSanh', 'tuQuy', 'samCo'}
-                    saveTheLastTypes = {'tuQuy', 'cuLu', typeThree}
+                    -- saveTheLastTypes = {'thungPhaSanh', 'tuquy', 'samCo'}
 
                     table.insert(results, converted)
                     table.insert(chiTypes, types)
                     print('---------SPECIAL CASE---------')
 
+                    table.insert(saveSpecialType, types)
                     return
                 end
             end
@@ -1139,7 +1136,7 @@ local function handleFromTopToBottomTuQuy(chiOne, currentCards, results,
 
 end
 
-function Game:handleChiOneTuQuy(chiOne, currentCards, results, chiTypes, scores)
+function Game:handleChiOneTuQuy(chiOne, currentCards, results, chiTypes, scores, saveSpecialType)
     local currentKind = p:findBaHoacBon(currentCards, true)
 
     if #currentKind > 0 then
@@ -1174,9 +1171,13 @@ function Game:handleChiOneTuQuy(chiOne, currentCards, results, chiTypes, scores)
 
                     table.insert(results, converted)
                     table.insert(chiTypes, types)
+                    table.insert(saveSpecialType, types)
+
                 end
 
-                if shouldStop then return end
+                if shouldStop then
+                    return
+                end
             end
         end
 
@@ -1205,6 +1206,7 @@ function Game:handleChiOneTuQuy(chiOne, currentCards, results, chiTypes, scores)
 
                         table.insert(results, converted)
                         table.insert(chiTypes, types)
+                        table.insert(saveSpecialType, types)
                     end
 
                     return
@@ -1218,7 +1220,7 @@ function Game:handleChiOneTuQuy(chiOne, currentCards, results, chiTypes, scores)
     handleFromTopToBottomTuQuy(chiOne, currentCards, results, chiTypes, scores)
 end
 
-function Game:handleChiOneCuLu(chiOne, currentCards, results, chiTypes, scores)
+function Game:handleChiOneCuLu(chiOne, currentCards, results, chiTypes, scores, saveSpecialType)
     local currentKind = Game:findCuLu(currentCards)
     print('[CARDS] Co ', #currentKind, ' cu Lu')
     if (#currentKind) > 0 then
@@ -1238,7 +1240,11 @@ function Game:handleChiOneCuLu(chiOne, currentCards, results, chiTypes, scores)
             end
         end
 
-        if (saveTheLastTypes[3] == 'samCo') then return end
+        if (saveTheLastTypes[3] == 'samCo') then
+            table.insert(saveSpecialType, saveTheLastTypes)
+
+            return
+        end
     else
         local thungArray = Game:findThung(currentCards)
         print('[CARDS] Co ', #thungArray, ' thung')
@@ -1265,7 +1271,11 @@ function Game:handleChiOneCuLu(chiOne, currentCards, results, chiTypes, scores)
                 print('LEN NE: ', #types)
             end
 
-            if (saveTheLastTypes[3] == 'samCo') then return end
+            if (saveTheLastTypes[3] == 'samCo') then
+                table.insert(saveSpecialType, saveTheLastTypes)
+
+                return
+            end
         end
     end
 
@@ -1273,7 +1283,7 @@ function Game:handleChiOneCuLu(chiOne, currentCards, results, chiTypes, scores)
                           scores)
 end
 
-function Game:handleChiOneThung(chiOne, currentCards, results, chiTypes, scores)
+function Game:handleChiOneThung(chiOne, currentCards, results, chiTypes, scores, saveSpecialType)
     local currentKind = Game:findThung(currentCards)
     print('[CARDS] Co ', #currentKind, ' thung')
     if (#currentKind) > 0 then
@@ -1293,7 +1303,11 @@ function Game:handleChiOneThung(chiOne, currentCards, results, chiTypes, scores)
             end
         end
 
-        if (saveTheLastTypes[3] == 'samCo') then return end
+        if (saveTheLastTypes[3] == 'samCo') then
+            table.insert(saveSpecialType, saveTheLastTypes)
+
+            return
+        end
     else
         local sanhArray = p:findSanh(currentCards)
 
@@ -1312,7 +1326,10 @@ function Game:handleChiOneThung(chiOne, currentCards, results, chiTypes, scores)
                 table.insert(chiTypes, types)
             end
 
-            if (saveTheLastTypes[3] == 'samCo') then return end
+            if (saveTheLastTypes[3] == 'samCo') then
+                table.insert(saveSpecialType, saveTheLastTypes)
+                return
+            end
         end
     end
 
@@ -1320,7 +1337,7 @@ function Game:handleChiOneThung(chiOne, currentCards, results, chiTypes, scores)
                           scores)
 end
 
-function Game:handleChiOneSanh(chiOne, currentCards, results, chiTypes, scores)
+function Game:handleChiOneSanh(chiOne, currentCards, results, chiTypes, scores, saveSpecialType)
     local currentKind = Game:findSanh(currentCards)
     print('[CARDS] Co ', #currentKind, ' sanh')
     if (#currentKind) > 0 then
@@ -1340,7 +1357,10 @@ function Game:handleChiOneSanh(chiOne, currentCards, results, chiTypes, scores)
             end
         end
 
-        if (saveTheLastTypes[3] == 'samCo') then return end
+        if (saveTheLastTypes[3] == 'samCo') then
+            table.insert(saveSpecialType, saveTheLastTypes)
+            return
+        end
     else
         local samCoArray = p:findBaHoacBon(currentCards, false)
 
@@ -1372,7 +1392,7 @@ function Game:handleChiOneSanh(chiOne, currentCards, results, chiTypes, scores)
                             local typeThree = checkType(chiThree)
                             local types = {'sanh', 'samCo', typeThree}
 
-                            if (p:isResultValid(chiOne, chiTwo, chiThree, types) == true) then
+                            if (p:isResultValid(chiOne, chiTwo, chiThree, types) == true and c:isFirstStronger(chiTwo, chiThree, 'samCo')) then
                                 table.insert(results, converted)
                                 table.insert(chiTypes, types)
                                 saveTheLastTypes = {'sanh', 'samCo', typeThree}
@@ -1382,7 +1402,10 @@ function Game:handleChiOneSanh(chiOne, currentCards, results, chiTypes, scores)
                 end
             end
 
-            if (saveTheLastTypes[3] == 'samCo') then return end
+            if (saveTheLastTypes[3] == 'samCo') then
+                table.insert(saveSpecialType, saveTheLastTypes)
+                return
+            end
         end
     end
 
@@ -1425,7 +1448,7 @@ local function handleFromTopToBottomSamCo(chiOne, currentCards, results,
     end
 end
 
-function Game:handleChiOneSamCo(chiOne, currentCards, results, chiTypes, scores)
+function Game:handleChiOneSamCo(chiOne, currentCards, results, chiTypes, scores, saveSpecialType)
     local currentKind = p:findBaHoacBon(currentCards, false)
     local saveTmpChiOne = t:shallowCopy(chiOne)
 
@@ -1463,6 +1486,7 @@ function Game:handleChiOneSamCo(chiOne, currentCards, results, chiTypes, scores)
                         shouldStop = true
 
                         if p:isResultValid(chiOne, chiTwo, chiThree, types) then
+                            table.insert(saveSpecialType, types)
                             table.insert(results, converted)
                             table.insert(chiTypes, types)
                         end
@@ -1600,7 +1624,24 @@ local function calculateResultValue(result, type)
 
 end
 
+local function checkShouldStopFindResults(saveSpecialType)
+    for i = 1, #saveSpecialType do
+        for j = 1, #SPECIAL_TYPE do
+            if SPECIAL_TYPE[j][1] == saveSpecialType[i][1] and
+                SPECIAL_TYPE[j][2] == saveSpecialType[i][2] and
+                SPECIAL_TYPE[j][3] == saveSpecialType[i][3]
+            then
+                return true
+            end
+        end
+    end
+
+    return false
+end
+
 function Game:findResults(array, results, chiTypes, scores)
+    local saveSpecialType = {}
+
     for i = 1, #TYPES - 3 do
         local currentKind = Game:findCurrentKindInNewVersion(TYPES[i], array)
         print('[CHI ONE]', TYPES[i], #currentKind)
@@ -1609,24 +1650,18 @@ function Game:findResults(array, results, chiTypes, scores)
                 local chiOne = currentKind[j]
                 local currentCards = t:filterValuesInArray(array, chiOne)
 
-                if TYPES[i] == 'thungPhaSanh' then
-                    Game:handleChiOneThungPhaSanh(chiOne, currentCards, results,
-                                             chiTypes, scores)
-                elseif TYPES[i] == 'tuQuy' then
-                    Game:handleChiOneTuQuy(chiOne, currentCards, results, chiTypes,
-                                      scores)
-                elseif TYPES[i] == 'cuLu' then
-                    Game:handleChiOneCuLu(chiOne, currentCards, results, chiTypes,
-                                     scores)
-                elseif TYPES[i] == 'thung' then
-                    Game:handleChiOneThung(chiOne, currentCards, results, chiTypes,
-                                      scores)
-                elseif TYPES[i] == 'sanh' then
-                    Game:handleChiOneSanh(chiOne, currentCards, results, chiTypes,
-                                     scores)
-                elseif TYPES[i] == 'samCo' then
-                    Game:handleChiOneSamCo(chiOne, currentCards, results, chiTypes,
-                                      scores)
+                if TYPES[i] == 'thungPhaSanh' and checkShouldStopFindResults(saveSpecialType) ~= true then
+                    Game:handleChiOneThungPhaSanh(chiOne, currentCards, results, chiTypes, scores, saveSpecialType)
+                elseif TYPES[i] == 'tuQuy' and checkShouldStopFindResults(saveSpecialType) ~= true then
+                    Game:handleChiOneTuQuy(chiOne, currentCards, results, chiTypes, scores, saveSpecialType)
+                elseif TYPES[i] == 'cuLu' and checkShouldStopFindResults(saveSpecialType) ~= true then
+                    Game:handleChiOneCuLu(chiOne, currentCards, results, chiTypes, scores, saveSpecialType)
+                elseif TYPES[i] == 'thung' and checkShouldStopFindResults(saveSpecialType) ~= true then
+                    Game:handleChiOneThung(chiOne, currentCards, results, chiTypes, scores, saveSpecialType)
+                elseif TYPES[i] == 'sanh' and checkShouldStopFindResults(saveSpecialType) ~= true then
+                    Game:handleChiOneSanh(chiOne, currentCards, results, chiTypes, scores, saveSpecialType)
+                elseif TYPES[i] == 'samCo' and checkShouldStopFindResults(saveSpecialType) ~= true then
+                    Game:handleChiOneSamCo(chiOne, currentCards, results, chiTypes, scores, saveSpecialType)
                 end
             end
         end

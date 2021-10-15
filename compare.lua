@@ -18,7 +18,6 @@ local function doi(firstArray, secondArray)
   local cardsDoiOne = {}
   local cardsDoiTwo = {}
 
-  print(#firstArray, #secondArray)
   for i = 1, #(firstArray) - 1 do
     for j = i + 1, #(firstArray) do
       if firstArray[i]['val'] == firstArray[j]['val'] then
@@ -109,20 +108,30 @@ local function samCo(firstArray, secondArray)
   local valueSamCoOne = 0
   local valueSamCoTwo = 0
 
-  if #firstArray > #secondArray then
-    return true
-  end
+  -- DEPRECATED
+  -- if #firstArray > #secondArray then
+  --   return true
+  -- end
+
+  -- local minLen = #secondArray
+
+  -- if (#firstArray < #secondArray) then
+  --   minLen = #firstArray
+  -- end
 
   for i = 1, #(firstArray) - 1 do
     for j = i + 1, #(firstArray) do
-      print(firstArray[i]['val'], firstArray[j]['val'])
       if firstArray[i]['val'] == firstArray[j]['val'] then
         valueSamCoOne = firstArray[i]['val']
         -- print('man', valueSamCoOne)
       end
+    end
+  end
+
+  for i = 1, #secondArray - 1 do
+    for j = i + 1, #secondArray do
       if secondArray[i]['val'] == secondArray[j]['val'] then
         valueSamCoTwo = secondArray[i]['val']
-        -- print('ha', valueSamCoTwo)
       end
     end
   end
@@ -142,6 +151,9 @@ end
 
 -- same to thung
 local function sanh(firstArray, secondArray, isCompareSanh)
+
+  firstArray = t:sortDesc(firstArray)
+  secondArray = t:sortDesc(secondArray)
 
   if isCompareSanh then
     local isSanhMinFirst = checkIsSanhMin(firstArray)
