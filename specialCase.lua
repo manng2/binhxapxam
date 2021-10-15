@@ -371,13 +371,15 @@ function Special:handle4Doi(array, results, chiTypes, scores)
   end
   print('-------')
 
+  print(#currentCards, #doiCards)
   local results = { handle4Doi2Thu1MauThau(doiCards, currentCards), handle4Doi1Thu2Doi(doiCards, currentCards) }
 
+  -- bugs in this one
   for i = 1, #results do
+    print(#results[i][1])
     table.insert(results, results[i][1])
     table.insert(chiTypes, results[i][2])
   end
-
 end
 
 local function handle3Doi3Doi(doiCards, currentCards)
@@ -420,17 +422,21 @@ local function handle3Doi1Thu1Doi(doiCards, currentCards)
 
   local arrayAfterFillRacs = p:divideRacsTo3Chi(chiOne, chiTwo, chiThree, currentCards, types)
 
-  chiOne = arrayAfterFillRacs[1]
-  chiTwo = arrayAfterFillRacs[2]
-  chiThree = arrayAfterFillRacs[3]
+  if (#arrayAfterFillRacs > 0) then
+    chiOne = arrayAfterFillRacs[1]
+    chiTwo = arrayAfterFillRacs[2]
+    chiThree = arrayAfterFillRacs[3]
 
-  local converted = convertChiToResult(chiOne, chiTwo, chiThree)
-  local result = { converted, types }
-  -- for i = 1, #converted do
-  --   print(converted[i]['val'])
-  -- end
-  -- os.exit()
-  return result
+    local converted = convertChiToResult(chiOne, chiTwo, chiThree)
+    local result = { converted, types }
+    -- for i = 1, #converted do
+    --   print(converted[i]['val'])
+    -- end
+    -- os.exit()
+    return result
+  end
+
+  return
 end
 
 function Special:handle3Doi(array, results, chiTypes, scores)

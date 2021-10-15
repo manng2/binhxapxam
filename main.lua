@@ -4,19 +4,19 @@
 -- 1: co 2: ro 3: chuon 4: bich
 
 array = {
-  { color = 0, val = 14, att = 2 }, --
-  { color = 0, val = 13, att = 2 }, --
-  { color = 0, val = 12, att = 2 }, --
-  { color = 0, val = 10, att = 2 }, --
-  { color = 0, val = 9, att = 2 }, --
-  { color = 1, val = 8, att = 4 }, --
+  { color = 0, val = 12, att = 1 },
+  { color = 0, val = 11, att = 1 }, --
+  { color = 1, val = 9, att = 3 }, --
+  { color = 0, val = 9, att = 1 }, --
+  { color = 0, val = 8, att = 1 }, --
   { color = 1, val = 8, att = 3 }, --
-  { color = 0, val = 7, att = 1 }, --
+  { color = 0, val = 8, att = 2 }, --
+  { color = 1, val = 6, att = 3 }, --
+  { color = 1, val = 6, att = 4 }, --
   { color = 0, val = 6, att = 2 }, --
-  { color = 0, val = 5, att = 2 }, --
-  { color = 0, val = 5, att = 1 },
-  { color = 1, val = 5, att = 3 },
   { color = 0, val = 4, att = 2 }, --
+  { color = 1, val = 4, att = 3 }, --
+  { color = 0, val = 4, att = 1 },
 }
 
 myArray = {

@@ -1139,7 +1139,7 @@ function PreHandle:handleChiTwoAndThreeMauThau(chiOne, typeChiOne, currentCards,
 
     while (isValid ~= true) do
         if #chiThree == 3 then
-            return
+            break
         end
 
         table.insert(chiTwo, copyCurrentCards[1])

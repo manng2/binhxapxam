@@ -1,5 +1,5 @@
 --****--
--1| chi 3: mauThau | chi 2: sanh | chi 1: sanh
+-6| chi 3: mauThau | chi 2: sanh | chi 1: sanh
 
 -- 4(4) | 3(1) | 2(2) | 
 -- 9(1) | 8(4) | 7(2) | 6(3) | 5(3) | 
@@ -23,19 +23,19 @@
 -- 6(3) | 5(3) | 4(4) | 3(1) | 2(2) | 
 -- 14(4) | 13(4) | 12(2) | 11(1) | 10(3) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 8(4) | 7(2) | 6(3) | 
 -- 9(1) | 5(3) | 4(4) | 3(1) | 2(2) | 
 -- 14(4) | 13(4) | 12(2) | 11(1) | 10(3) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 8(4) | 7(2) | 6(3) | 
 -- 9(1) | 5(3) | 4(4) | 3(1) | 2(2) | 
 -- 14(4) | 13(4) | 12(2) | 11(1) | 10(3) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 8(4) | 7(2) | 6(3) | 
 -- 9(1) | 5(3) | 4(4) | 3(1) | 2(2) | 
@@ -65,19 +65,19 @@
 -- 14(4) | 5(3) | 4(4) | 3(1) | 2(2) | 
 -- 13(4) | 12(2) | 11(1) | 10(3) | 9(1) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 8(4) | 7(2) | 6(3) | 
 -- 14(4) | 5(3) | 4(4) | 3(1) | 2(2) | 
 -- 13(4) | 12(2) | 11(1) | 10(3) | 9(1) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 8(4) | 7(2) | 6(3) | 
 -- 14(4) | 5(3) | 4(4) | 3(1) | 2(2) | 
 -- 13(4) | 12(2) | 11(1) | 10(3) | 9(1) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 8(4) | 7(2) | 6(3) | 
 -- 14(4) | 5(3) | 4(4) | 3(1) | 2(2) | 
@@ -101,19 +101,19 @@
 -- 14(4) | 5(3) | 4(4) | 3(1) | 2(2) | 
 -- 12(2) | 11(1) | 10(3) | 9(1) | 8(4) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 13(4) | 7(2) | 6(3) | 
 -- 14(4) | 5(3) | 4(4) | 3(1) | 2(2) | 
 -- 12(2) | 11(1) | 10(3) | 9(1) | 8(4) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 13(4) | 7(2) | 6(3) | 
 -- 14(4) | 5(3) | 4(4) | 3(1) | 2(2) | 
 -- 12(2) | 11(1) | 10(3) | 9(1) | 8(4) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 13(4) | 7(2) | 6(3) | 
 -- 14(4) | 5(3) | 4(4) | 3(1) | 2(2) | 
@@ -131,19 +131,19 @@
 -- 14(4) | 5(3) | 4(4) | 3(1) | 2(2) | 
 -- 11(1) | 10(3) | 9(1) | 8(4) | 7(2) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 13(4) | 12(2) | 6(3) | 
 -- 14(4) | 5(3) | 4(4) | 3(1) | 2(2) | 
 -- 11(1) | 10(3) | 9(1) | 8(4) | 7(2) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 13(4) | 12(2) | 6(3) | 
 -- 14(4) | 5(3) | 4(4) | 3(1) | 2(2) | 
 -- 11(1) | 10(3) | 9(1) | 8(4) | 7(2) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 13(4) | 12(2) | 6(3) | 
 -- 14(4) | 5(3) | 4(4) | 3(1) | 2(2) | 
@@ -155,109 +155,109 @@
 -- 14(4) | 5(3) | 4(4) | 3(1) | 2(2) | 
 -- 10(3) | 9(1) | 8(4) | 7(2) | 6(3) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 13(4) | 12(2) | 11(1) | 
 -- 14(4) | 5(3) | 4(4) | 3(1) | 2(2) | 
 -- 10(3) | 9(1) | 8(4) | 7(2) | 6(3) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 13(4) | 12(2) | 11(1) | 
 -- 14(4) | 5(3) | 4(4) | 3(1) | 2(2) | 
 -- 10(3) | 9(1) | 8(4) | 7(2) | 6(3) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 13(4) | 12(2) | 11(1) | 
 -- 14(4) | 5(3) | 4(4) | 3(1) | 2(2) | 
 -- 10(3) | 9(1) | 8(4) | 7(2) | 6(3) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 13(4) | 12(2) | 11(1) | 
 -- 14(4) | 10(3) | 4(4) | 3(1) | 2(2) | 
 -- 9(1) | 8(4) | 7(2) | 6(3) | 5(3) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 13(4) | 12(2) | 11(1) | 
 -- 14(4) | 10(3) | 4(4) | 3(1) | 2(2) | 
 -- 9(1) | 8(4) | 7(2) | 6(3) | 5(3) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 13(4) | 12(2) | 11(1) | 
 -- 14(4) | 10(3) | 4(4) | 3(1) | 2(2) | 
 -- 9(1) | 8(4) | 7(2) | 6(3) | 5(3) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 13(4) | 12(2) | 11(1) | 
 -- 14(4) | 10(3) | 9(1) | 3(1) | 2(2) | 
 -- 8(4) | 7(2) | 6(3) | 5(3) | 4(4) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 13(4) | 12(2) | 11(1) | 
 -- 14(4) | 10(3) | 9(1) | 3(1) | 2(2) | 
 -- 8(4) | 7(2) | 6(3) | 5(3) | 4(4) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 13(4) | 12(2) | 11(1) | 
 -- 14(4) | 10(3) | 9(1) | 3(1) | 2(2) | 
 -- 8(4) | 7(2) | 6(3) | 5(3) | 4(4) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 13(4) | 12(2) | 11(1) | 
 -- 14(4) | 10(3) | 9(1) | 8(4) | 2(2) | 
 -- 7(2) | 6(3) | 5(3) | 4(4) | 3(1) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 13(4) | 12(2) | 11(1) | 
 -- 14(4) | 10(3) | 9(1) | 8(4) | 2(2) | 
 -- 7(2) | 6(3) | 5(3) | 4(4) | 3(1) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 13(4) | 12(2) | 11(1) | 
 -- 14(4) | 10(3) | 9(1) | 8(4) | 2(2) | 
 -- 7(2) | 6(3) | 5(3) | 4(4) | 3(1) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 13(4) | 12(2) | 11(1) | 
 -- 14(4) | 10(3) | 9(1) | 8(4) | 7(2) | 
 -- 6(3) | 5(3) | 4(4) | 3(1) | 2(2) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 13(4) | 12(2) | 11(1) | 
 -- 14(4) | 10(3) | 9(1) | 8(4) | 7(2) | 
 -- 6(3) | 5(3) | 4(4) | 3(1) | 2(2) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 13(4) | 12(2) | 11(1) | 
 -- 14(4) | 10(3) | 9(1) | 8(4) | 7(2) | 
 -- 6(3) | 5(3) | 4(4) | 3(1) | 2(2) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 12(2) | 11(1) | 10(3) | 
 -- 13(4) | 9(1) | 8(4) | 7(2) | 6(3) | 
 -- 14(4) | 5(3) | 4(4) | 3(1) | 2(2) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 12(2) | 11(1) | 10(3) | 
 -- 13(4) | 9(1) | 8(4) | 7(2) | 6(3) | 
 -- 14(4) | 5(3) | 4(4) | 3(1) | 2(2) | 
 --****--
--6| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
+-16| chi 3: mauThau | chi 2: mauThau | chi 1: sanh
 
 -- 12(2) | 11(1) | 10(3) | 
 -- 13(4) | 9(1) | 8(4) | 7(2) | 6(3) | 

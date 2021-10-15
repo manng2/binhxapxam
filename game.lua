@@ -1752,7 +1752,13 @@ local function handleFromTopToBottomBlackTable(currentType, chiOne, currentCards
                     end
                 end
 
-                if (TYPES[i] == 'doi' or TYPES[i] == 'thu') then
+                if (TYPES[i] == 'thu') then
+                    if (compare:isFirstStronger(chiOne, chiTwo, 'thu')) then
+                        p:handleChiThreeDoi(chiOne, chiTwo, currentType, TYPES[i], afterCurrentCards, results, chiTypes)
+                        p:handleChiThreeMauThau(chiOne, chiTwo, currentType, TYPES[i], afterCurrentCards, results, chiTypes)
+                    end
+                end
+                if (TYPES[i] == 'doi') then
                     if (compare:isFirstStronger(chiOne, chiTwo, 'doi')) then
                         p:handleChiThreeDoi(chiOne, chiTwo, currentType, TYPES[i], afterCurrentCards, results, chiTypes)
                         p:handleChiThreeMauThau(chiOne, chiTwo, currentType, TYPES[i], afterCurrentCards, results, chiTypes)
@@ -1763,6 +1769,9 @@ local function handleFromTopToBottomBlackTable(currentType, chiOne, currentCards
     end
 
     -- GOT SOME BUGS ON THIS FUNCTION
+    -- print('du ma may')
+    -- print(#results, #chiTypes)
+    -- os.exit()
     p:handleChiTwoAndThreeMauThau(chiOne, currentType, currentCards, results, chiTypes)
 
 end
@@ -1836,8 +1845,18 @@ function Game:play(array)
     Game:findResults(array, results, chiTypes, scores)
 
     -- [START] HANDLE SPECIAL CASE ZONE
-    handleSpecialCase(array, results, chiTypes, scores)
+    -- bugs in this function
+    -- handleSpecialCase(array, results, chiTypes, scores)
     -- [END] HANDLE SPECIAL CASE ZONE
+
+    -- print('RESULTS', #(results))
+    -- print('TYPES', #(chiTypes))
+    -- print('SCORES', #scores)
+
+    -- print(chiTypes[#chiTypes][1], chiTypes[#chiTypes][2], chiTypes[#chiTypes][3])
+    -- print(chiTypes[#chiTypes - 1][1], chiTypes[#chiTypes][2], chiTypes[#chiTypes][3])
+
+    -- os.exit()
 
     -- [START] HANDLE BLACK CASE
     handleBlackTableCase(array, results, chiTypes, scores)
@@ -1855,6 +1874,8 @@ function Game:play(array)
     print('TYPES', #(chiTypes))
     print('SCORES', #scores)
 
+    -- print(chiTypes[#chiTypes][1], chiTypes[#chiTypes][2], chiTypes[#chiTypes][3])
+    -- os.exit()
     local saveScore = scores[1]
     local saveIdx = 1
 
