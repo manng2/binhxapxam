@@ -374,11 +374,11 @@ function Special:handle4Doi(array, results, chiTypes, scores)
   print(#currentCards, #doiCards)
   local results = { handle4Doi2Thu1MauThau(doiCards, currentCards), handle4Doi1Thu2Doi(doiCards, currentCards) }
 
-  -- bugs in this one
   for i = 1, #results do
-    print(#results[i][1])
-    table.insert(results, results[i][1])
-    table.insert(chiTypes, results[i][2])
+    if (#results[i][1] == 13) then
+      table.insert(results, results[i][1])
+      table.insert(chiTypes, results[i][2])
+    end
   end
 end
 
