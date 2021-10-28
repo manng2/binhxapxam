@@ -701,8 +701,13 @@ function Count:mauThau3(array, index)
   local copyValueArray = copyArrayValue(newArray)
   local distance = 0
 
+  -- print(copyMauThau3Max[1], copyMauThau3Max[2], copyMauThau3Max[3])
+  -- print(copyValueArray[1], copyValueArray[2], copyValueArray[3])
+
   while checkIsMatching(copyMauThau3Max, copyValueArray) ~= true do
       -- print(copyMauThau3Max[1], copyMauThau3Max[2], copyMauThau3Max[3])
+      -- print(copyValueArray[1], copyValueArray[2], copyValueArray[3])
+
     if copyMauThau3Max[3] - 1 >= 2 then
       copyMauThau3Max[3] = copyMauThau3Max[3] - 1
       distance = distance + 1

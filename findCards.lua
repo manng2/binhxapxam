@@ -278,24 +278,29 @@ end
 local function handleFindFinalResult(results, chiTypes, scores, cards, saveIdx, saveScore)
   local kq = specialCase:soToiTrang(cards)
   local text = ''
+  local res = {}
 
   text = readableData(results[saveIdx], chiTypes[saveIdx], saveScore)
 
   if (kq ~= nil) then
     if (kq[2] >= saveScore) then
       text = readableData(kq[1], { kq[3], kq[3], kq[3] }, kq[2])
+      res = { kq[1], { kq[3], kq[3], kq[3] }, kq[2] }
     else
       text = readableData(results[saveIdx], chiTypes[saveIdx], scores[saveIdx])
+      res = { results[saveIdx], chiTypes[saveIdx], scores[saveIdx] }
     end
   end
 
   if (saveScore < -6) then
     local binhLung = findBinhLung(results)
     text = readableData(binhLung, { 'binhLung', 'binhLung', 'binhLung' }, -6)
+    res = { binhLung, { 'binhLung', 'binhLung', 'binhLung' }, -6 }
   end
 
-  writeResults(text)
+  -- writeResults(text)
 
+  return res
 end
 
 local function isToiTrang(types)
@@ -640,9 +645,12 @@ function Find:findCards(cards, oppCards, oppTypes)
     end
   end
 
-  handleFindFinalResult(results, chiTypes, scores, cards, saveIdx, saveScore)
+  local finalResult = handleFindFinalResult(results, chiTypes, scores, cards, saveIdx, saveScore)
 
-  writeEventsToFile(results, chiTypes, scores)
+  -- WRITE TO FILE
+  -- writeEventsToFile(results, chiTypes, scores)
+
+  return finalResult
 end
 
 return Find

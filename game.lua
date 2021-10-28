@@ -588,131 +588,6 @@ function Game:countValue(array, type, index)
     return score
 end
 
--- find with different type (chiTwo # chiOne)
-local function findNextWithChiOne(results, chiOne, type, currentCards, chiType,
-                                  chiTypes, scores, cards)
-    local currentKind = {}
-
-    while #(currentKind) == 0 and type ~= 'mauThau' do
-        currentKind = findNextKind(type, currentCards)
-
-        if type == 'thungPhaSanh' then
-            type = 'tuQuy'
-        elseif type == 'tuQuy' then
-            type = 'cuLu'
-        elseif type == 'cuLu' then
-            type = 'thung'
-        elseif type == 'thung' then
-            type = 'sanh'
-        elseif type == 'sanh' then
-            type = 'samCo'
-        elseif type == 'samCo' then
-            type = 'thu'
-        elseif type == 'thu' then
-            type = 'doi'
-        else
-            type = 'mauThau'
-        end
-    end
-    -- check special case zone
-    if chiType[1] == 'samCo' and type == 'mauThau' then
-        print('--------')
-        print(chiType[1], type)
-        if specialCase.containsSamCoTu2Den12 ~= true then
-            if specialCase:checkIsSamCoTu2Den12(cards) then
-                specialCase.containsSamCoTu2Den12 = true
-                print('watsashi no')
-                local result = specialCase:samCoTu2Den12(array)
-                table.insert(results, result[1])
-                table.insert(chiTypes, result[2])
-
-                print('=-=-=-=-=-')
-                for i = 1, #(result[1]) do
-                    print(result[1][i]['val'])
-                end
-                local chiOne = {
-                    result[1][1], result[1][2], result[1][3], result[1][4],
-                    result[1][5]
-                }
-                local chiTwo = {
-                    result[1][6], result[1][7], result[1][8], result[1][9],
-                    result[1][10]
-                }
-                local chiThree = {result[1][11], result[1][12], result[1][13]}
-
-                local score = Game:countValue(chiOne, 'samCo', 1)
-                print('score 1: ', score)
-                score = score + Game:countValue(chiTwo, 'mauThau', 2)
-                score = score + Game:countValue(chiThree, 'mauThau')
-                print('calm down')
-
-                table.insert(scores, score)
-                -- print('log ra roi ne')
-            end
-            -- return
-        end
-
-        return
-    end
-
-    if type == 'mauThau' and #(currentKind) > 0 then
-        print('xxxxxx', chiType[1])
-        local result = specialCase:handle2ChiRac(chiOne, currentCards)
-
-        if result ~= nil then
-            local cards = result[1]
-
-            local chiTwo = {cards[6], cards[7], cards[8], cards[9], cards[10]}
-            local chiThree = {cards[11], cards[12], cards[13]}
-
-            print('xxxxxxx')
-            for i = 1, #(chiTwo) do print(chiTwo[i]['val']) end
-            print('xxxxxxx')
-
-            print('xxxxxxx')
-            for i = 1, #(chiThree) do print(chiThree[i]['val']) end
-            print('xxxxxxx')
-
-            local score = Game:countValue(chiOne, chiType[1], 1)
-            score = score + Game:countValue(chiTwo, 'mauThau', 2)
-            score = score + Game:countValue(chiThree, 'mauThau')
-
-            table.insert(results, tmp)
-            table.insert(chiTypes, copyChiType)
-            table.insert(scores, score)
-        end
-
-        return
-    end
-
-    -- end zone
-    print('types ne', chiType[1], type)
-    for i = 1, #(currentKind) do
-        print('man iu')
-        local copyChiType = t:shallowCopy(chiType)
-        local chiTwo = currentKind[i]
-        -- if c:isFirstStronger(chiOne, chiTwo) then
-        table.insert(copyChiType, type)
-        local chiThree = {}
-        local currentCardsAfterTwo = t:shallowCopy(currentCards)
-        chiThree = t:filterValuesInArray(currentCardsAfterTwo, chiTwo)
-        table.insert(copyChiType, checkType(chiThree))
-
-        if checkBinhLung(copyChiType) ~= true then
-            local tmp = convertChiToResult(chiOne, chiTwo, chiThree)
-            local score = Game:countValue(chiOne, copyChiType[1], 1)
-            score = score + Game:countValue(chiTwo, copyChiType[2], 2)
-            score = score + Game:countValue(chiThree, copyChiType[3])
-
-            table.insert(results, tmp)
-            table.insert(chiTypes, copyChiType)
-            table.insert(scores, score)
-        end
-        -- else 
-        -- break
-    end
-end
-
 local function writeEvents(content)
     file = io.open("oppCards.lua", "a")
 
@@ -769,28 +644,6 @@ local function readableData(array, types, scores)
     return result
 end
 
-local function findIndexOfType(type, types)
-    for i = 1, #(types) do if types[i] == type then return i end end
-end
-
--- function Game:isValidInSamCo(array)
---   -- print('----')
---   -- for i = 1, 5 do
---   --   print(array[i]['val'])
---   -- end
---   -- print('----')
-
---   if 
---     isTuQuy(array) ~= true and
---     isCuLu(array) ~= true and
---     isSamCo(array) then
-
---     return true
---   else
---     return false
---   end
--- end
-
 function Game:isValidInThu(array)
     if isTuQuy(array) ~= true and isCuLu(array) ~= true and isSamCo(array) ~=
         true and isThung(array) then
@@ -803,22 +656,6 @@ end
 
 -- find
 
-local function checkIsRightType(cards, type)
-    local cardsType = checkType(cards)
-
-    return cardsType == type
-end
-
--- print(checkIsRightType(x, 'doi'))
-local function isTwoResultSame(arrayOne, arrayTwo)
-    if #arrayOne == 0 or #arrayTwo == 0 then return false end
-
-    for i = 1, #(arrayOne) do
-        if (arrayOne[i]['val'] ~= arrayTwo[i]['val']) then return false end
-    end
-
-    return true
-end
 
 local function findOneOtherCardsInChiTwo(cards)
     local results = {}
@@ -1610,11 +1447,11 @@ local function calculateResultValue(result, type)
     local chiThree = {result[11], result[12], result[13]}
 
     local score = -100000
-    print('typee: ', type[1], type[2], type[3])
+    -- print('typee: ', type[1], type[2], type[3])
     for i = 1, #result do
         print(result[i]['val'], result[i]['att'])
     end
-    print('-----')
+    -- print('-----')
 
     if (p:isResultValid(chiOne, chiTwo, chiThree, type)) then
         score = Game:countValue(chiOne, type[1], 1) + Game:countValue(chiTwo, type[2], 2) + Game:countValue(chiThree, type[3])
@@ -1668,15 +1505,6 @@ function Game:findResults(array, results, chiTypes, scores)
     end
 end
 
-local function handleToiTrang(results, chiTypes, myCards)
-    local kq = specialCase:soToiTrang(myCards)
-
-    if (kq ~= nil) then
-      local text = readableData(kq[1], { kq[3], kq[3], kq[3] }, kq[2])
-      writeResults(text)
-    end
-end
-
 local function writeEventsToFile(results, chiTypes, scores)
     for i = 1, #results do
         local text = readableData(results[i], chiTypes[i], scores[i])
@@ -1710,7 +1538,7 @@ local function handleFindFinalResult(results, chiTypes, scores, array, saveIdx, 
         end
     end
 
-    writeResults(text)
+    -- writeResults(text)
 
     return { RESULT, types, saveScore }
 end
@@ -1769,7 +1597,6 @@ local function handleFromTopToBottomBlackTable(currentType, chiOne, currentCards
     end
 
     -- GOT SOME BUGS ON THIS FUNCTION
-    -- print('du ma may')
     -- print(#results, #chiTypes)
     -- os.exit()
     p:handleChiTwoAndThreeMauThau(chiOne, currentType, currentCards, results, chiTypes)
@@ -1797,18 +1624,6 @@ local function handleBlackTableCase(array, results, chiTypes, scores)
             for j = 1, #currentKind do
                 local chiOne = currentKind[j]
 
-                -- if (TYPES[i] == 'thu' and #currentKind == j) then
-                --     print(j)
-                --     for k = 1, #currentKind do
-                --         print('------')
-                --         for l = 1, #currentKind[k] do
-                --             print(currentKind[k][l]['val'])
-                --         end
-                --         print('------')
-
-                --     end
-                --     os.exit()
-                -- end
                 if (#saveValue ~= 0) then
                     local curr = saveValueToArray(chiOne)
 
@@ -1849,10 +1664,6 @@ function Game:play(array)
     -- handleSpecialCase(array, results, chiTypes, scores)
     -- [END] HANDLE SPECIAL CASE ZONE
 
-    -- print('RESULTS', #(results))
-    -- print('TYPES', #(chiTypes))
-    -- print('SCORES', #scores)
-
     -- print(chiTypes[#chiTypes][1], chiTypes[#chiTypes][2], chiTypes[#chiTypes][3])
     -- print(chiTypes[#chiTypes - 1][1], chiTypes[#chiTypes][2], chiTypes[#chiTypes][3])
 
@@ -1870,9 +1681,9 @@ function Game:play(array)
 
     -- [END] HANDLE COUNT VALUE
 
-    print('RESULTS', #(results))
-    print('TYPES', #(chiTypes))
-    print('SCORES', #scores)
+    -- print('RESULTS', #(results))
+    -- print('TYPES', #(chiTypes))
+    -- print('SCORES', #scores)
 
     -- print(chiTypes[#chiTypes][1], chiTypes[#chiTypes][2], chiTypes[#chiTypes][3])
     -- os.exit()
@@ -1891,7 +1702,7 @@ function Game:play(array)
 
     local finalResult = handleFindFinalResult(results, chiTypes, scores, array, saveIdx, saveScore)
 
-    writeEventsToFile(results, chiTypes, scores)
+    -- writeEventsToFile(results, chiTypes, scores)
 
     return finalResult
 end
