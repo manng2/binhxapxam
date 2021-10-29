@@ -27,71 +27,77 @@ local mauThau5Max = { 14, 13, 12, 11, 9 }
 local mauThau3Max = { 14, 13, 12 }
 
 -- [START] chi One zone
-local thungPhaSanhInitPointChiOne = 4000
-local thungPhaSanhInitStepChiOne = 5
+local thungPhaSanhInitPointChiOne = 2683
+local thungPhaSanhInitStepChiOne = 0
 
-local tuQuyInitPointChiOne = 3000
-local tuQuyInitStepChiOne = 10
+local tuQuyInitPointChiOne = 2682
+local tuQuyInitStepChiOne = 0
 
-local cuLuInitPointChiOne = 2500
-local cuLuInitStepChiOne = 10
+local cuLuInitPointChiOne = 2681
+local cuLuInitStepChiOne = 1
 
-local thungInitPointChiOne = 2000
-local thungInitStepChiOne = 5
+local thungInitPointChiOne = 2668
+local thungInitStepChiOne = 1
 
-local samCo5InitPointChiOne = 1900
-local samCo5InitStepChiOne = 3
+local sanhInitPointChiOne = 1391
+local sanhInitStepChiOne = 1
 
-local samCo3InitPointChiOne = 1850
-local samCo3InitStepChiOne = 2
+local samCo5InitPointChiOne = 1381
+local samCo5InitStepChiOne = 1
 
-local thuInitPointChiOne = 1800
-local thuInitStepChiOne = 7
+local samCo3InitPointChiOne = 300
+local samCo3InitStepChiOne = 0
 
-local doi5InitPointChiOne = 1400
-local doi5InitStepChiOne = 3
+local thuInitPointChiOne = 1368
+local thuInitStepChiOne = 1
 
-local doi3InitPointChiOne = 1000
-local doi3InitStepChiOne = 4
+local doi5InitPointChiOne = 1290
+local doi5InitStepChiOne = 1
 
-local mauThau5InitPointChiOne = 700
-local mauThau5InitStepChiOne = 3
+local doi3InitPointChiOne = 299
+local doi3InitStepChiOne = 1
 
-local mauThau3InitPointChiOne = 300
-local mauThau3InitStepChiOne = 3
+local mauThau5InitPointChiOne = 1277
+local mauThau5InitStepChiOne = 1
+
+local mauThau3InitPointChiOne = 286
+local mauThau3InitStepChiOne = 1
 
 -- [END] chi One zone
 
 -- [START] chi Two zone
-local thungPhaSanhInitPointChiTwo = 8000
-local thungPhaSanhInitStepChiTwo = 10
+local thungPhaSanhInitPointChiTwo = 2683
+local thungPhaSanhInitStepChiTwo = 0
 
-local tuQuyInitPointChiTwo = 6000
-local tuQuyInitStepChiTwo = 20
+local tuQuyInitPointChiTwo = 2682
+local tuQuyInitStepChiTwo = 0
 
-local cuLuInitPointChiTwo = 5000
-local cuLuInitStepChiTwo = 15
+local cuLuInitPointChiTwo = 2681
+local cuLuInitStepChiTwo = 1
 
-local thungInitPointChiTwo = 4000
-local thungInitStepChiTwo = 20
+local thungInitPointChiTwo = 2668
+local thungInitStepChiTwo = 1
 
-local samCo5InitPointChiTwo = 3800
-local samCo5InitStepChiTwo = 7
+local sanhInitPointChiTwo = 1391
+local sanhInitStepChiTwo = 1
+
+local samCo5InitPointChiTwo = 1381
+local samCo5InitStepChiTwo = 1
 
 local samCo3InitPointChiTwo = 3700
 local samCo3InitStepChiTwo = 6
 
-local thuInitPointChiTwo = 3600
-local thuInitStepChiTwo = 12
+local thuInitPointChiTwo = 1368
+local thuInitStepChiTwo = 1
 
-local doi5InitPointChiTwo = 2800
-local doi5InitStepChiTwo = 6
+local doi5InitPointChiTwo = 1290
+local doi5InitStepChiTwo = 1
 
 local doi3InitPointChiTwo = 2000
 local doi3InitStepChiTwo = 9
 
-local mauThau5InitPointChiTwo = 1400
-local mauThau5InitStepChiTwo = 8
+local mauThau5InitPointChiTwo = 1277
+local mauThau5InitStepChiTwo = 1
 
 local mauThau3InitPointChiTwo = 600
 local mauThau3InitStepChiTwo = 6
@@ -118,7 +124,7 @@ local function copyArrayValue(array)
 end
 
 function Count:thungPhaSanh(array, index, isFindThungPhaSanh)
-  print('welcome thungPhaSanh')
+  -- print('welcome thungPhaSanh')
   local maxInit = nil
   local stepInit = nil
 
@@ -148,14 +154,14 @@ function Count:thungPhaSanh(array, index, isFindThungPhaSanh)
     distance = distance + 1
   end  
   
-  print('distance: ', distance)
+  -- print('distance: ', distance)
   return maxInit - distance * stepInit
 
   -- return distance
 end
 
 function Count:tuQuy(array, index)
-  print('welcome thungPhaSanh')
+  -- print('welcome thungPhaSanh')
 
   local maxInit = nil
   local stepInit = nil
@@ -183,14 +189,14 @@ function Count:tuQuy(array, index)
         copyTuQuyMax[5] = copyTuQuyMax[5] - 1
         if copyTuQuyMax[5] ~= copyTuQuyMax[1] then
           distance = distance + 1
-          print(copyTuQuyMax[1], copyTuQuyMax[5])
+          -- print(copyTuQuyMax[1], copyTuQuyMax[5])
         end
       else
         copyTuQuyMax[1] = copyTuQuyMax[1] - 1
         copyTuQuyMax[5] = 15
         repeat
           copyTuQuyMax[5] = copyTuQuyMax[5] - 1
-          print('xxx', copyTuQuyMax[1], copyTuQuyMax[5])
+          -- print('xxx', copyTuQuyMax[1], copyTuQuyMax[5])
         until copyTuQuyMax[1] ~= copyTuQuyMax[5]
         distance = distance + 1
       end
@@ -205,7 +211,7 @@ function Count:tuQuy(array, index)
 end
 
 function Count:cuLu(array, index)
-  print('welcom cuLu: ')
+  -- print('welcom cuLu: ')
 
   local newArray = t:sortDesc(array)
 
@@ -234,12 +240,12 @@ function Count:cuLu(array, index)
         value2Max = value2Max - 1
         if (value2Max ~= value3Max) then
           distance = distance + 1
-          print(value3Max, value2Max)
+          -- print(value3Max, value2Max)
         end
       else 
         value3Max = value3Max - 1
         value2Max = 14
-        print(value3Max, value2Max)
+        -- print(value3Max, value2Max)
         distance = distance + 1
       end
     end
@@ -247,7 +253,7 @@ function Count:cuLu(array, index)
   
   -- distance = distance + value2Max - value2
 
-  print('distance: ', distance)
+  -- print('distance: ', distance)
 
   return maxInit - distance * stepInit
 end
@@ -321,7 +327,7 @@ function Count:thung(array, index)
     end
   end
   -- print(copyThungMax[1], copyThungMax[2], copyThungMax[3], copyThungMax[4], copyThungMax[5])
-  print('distance: ', distance)
+  -- print('distance: ', distance)
 
   -- return distance
   return maxInit - distance * stepInit
@@ -415,17 +421,17 @@ function Count:samCo5(array, index)
   -- return distance
 end
 
-function Count:samCo3(array, index)
+function Count:samCo3(array)
   local maxInit = nil
   local stepInit = nil
 
-  if index == 1 then
+  -- if index == 1 then
     maxInit = samCo3InitPointChiOne
     stepInit = samCo3InitStepChiOne
-  else
-    maxInit = samCo3InitPointChiTwo
-    stepInit = samCo3InitStepChiTwo
-  end
+  -- else
+    -- maxInit = samCo3InitPointChiTwo
+    -- stepInit = samCo3InitStepChiTwo
+  -- end
 
   local sortedArray = p:sortSamCo(array)
   local copysamCo3Max = t:shallowCopy(samCo3Max)
@@ -455,22 +461,22 @@ function Count:thu(array, index)
 
   -- local sortedArray = t:shallowCopy(newArray)
   local copyThuMax = t:shallowCopy(thuMax)
-  print('value ar')
-  for i = 1, #sortedArray do
-    print(sortedArray[i]['val'])
-  end
+  -- print('value ar')
+  -- for i = 1, #sortedArray do
+  --   print(sortedArray[i]['val'])
+  -- end
   local copyValueArray = copyArrayValue(sortedArray)
   local distance = 0
 
-  print('thu max', index)
-  for i = 1, #copyThuMax do
-    print(copyThuMax[i])
-  end
+  -- print('thu max', index)
+  -- for i = 1, #copyThuMax do
+  --   print(copyThuMax[i])
+  -- end
 
-  print('value ar', index)
-  for i = 1, #copyValueArray do
-    print(copyValueArray[i])
-  end
+  -- print('value ar', index)
+  -- for i = 1, #copyValueArray do
+  --   print(copyValueArray[i])
+  -- end
   while checkIsMatching(copyThuMax, copyValueArray) ~= true do
   -- print(copyThuMax[1], copyThuMax[2], copyThuMax[3], copyThuMax[4], copyThuMax[5])
     if copyThuMax[5] - 1 >= 2 then
@@ -610,14 +616,14 @@ function Count:doi5(array, index)
 
   local nextX = Count:findNextInDoi5(copydoi5Max)
 
-  for i = 1, #nextX do
-    print(nextX[i])
-  end
-  for i = 1, #copyValueArray do
-    -- print('ooo')
-    print(copyValueArray[i])
-  end
-  print(#nextX, #copyValueArray)
+  -- for i = 1, #nextX do
+  --   print(nextX[i])
+  -- end
+  -- for i = 1, #copyValueArray do
+  --   -- print('ooo')
+  --   print(copyValueArray[i])
+  -- end
+  -- print(#nextX, #copyValueArray)
   while checkIsMatching(nextX, copyValueArray) ~= true do
     -- print('dst', distance)
     distance = distance + 1
@@ -628,18 +634,18 @@ function Count:doi5(array, index)
   return maxInit - distance * stepInit
 end
 
-function Count:doi3(array, index)
+function Count:doi3(array)
   local newArray = t:sortDesc(array)
   local maxInit = nil
   local stepInit = nil
 
-  if index == 1 then
+  -- if index == 1 then
     maxInit = doi3InitPointChiOne
     stepInit = doi3InitStepChiOne
-  else
-    maxInit = doi3InitPointChiTwo
-    stepInit = doi3InitStepChiTwo
-  end
+  -- else
+    -- maxInit = doi3InitPointChiTwo
+    -- stepInit = doi3InitStepChiTwo
+  -- end
 
   local sortedArray = p:sortDoi(newArray)
   local copydoi3Max = t:shallowCopy(doi3Max)
@@ -656,7 +662,7 @@ function Count:doi3(array, index)
         copydoi3Max[3] = 15
         repeat
           copydoi3Max[3] = copydoi3Max[3] - 1
-          print(copydoi3Max[1], copydoi3Max[3])
+          -- print(copydoi3Max[1], copydoi3Max[3])
         until copydoi3Max[1] ~= copydoi3Max[3]
         distance = distance + 1
       end
@@ -684,18 +690,18 @@ end
 
 -- end
 
-function Count:mauThau3(array, index)
+function Count:mauThau3(array)
   local newArray = t:sortDesc(array)
   local maxInit = nil
   local stepInit = nil
 
-  if index == 1 then
+  -- if index == 1 then
     maxInit = mauThau3InitPointChiOne
     stepInit = mauThau3InitStepChiOne
-  else
-    maxInit = mauThau3InitPointChiTwo
-    stepInit = mauThau3InitStepChiTwo
-  end
+  -- else
+    -- maxInit = mauThau3InitPointChiTwo
+    -- stepInit = mauThau3InitStepChiTwo
+  -- end
 
   local copyMauThau3Max = t:shallowCopy(mauThau3Max)
   local copyValueArray = copyArrayValue(newArray)
@@ -722,12 +728,12 @@ function Count:mauThau3(array, index)
       distance = distance + 1
     end
   end
-  print('distance: ', distance)
+  -- print('distance: ', distance)
   return maxInit - distance * stepInit
 end
 
 function Count:toiTrang(type)
-  print('type', type)
+  -- print('type', type)
   if (type == 'lienMinhTocRong') then
     return lienMinhTocRong
   end
