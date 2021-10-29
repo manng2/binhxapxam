@@ -59,7 +59,7 @@ local function find3Value(array)
   end
 
   for i = 1, #(newArray) - 2 do
-    print('cc', newArray[i]['val'])
+    -- print('cc', newArray[i]['val'])
     if (
        newArray[i]['val'] ==  newArray[i + 1]['val'] and
        newArray[i + 2]['val'] ==  newArray[i + 1]['val']
@@ -194,7 +194,7 @@ end
 -- 3 lá giống nhau (2 -> 12)
 function Special:checkIsSamCoTu2Den12(array)
   local value3 = find3Value(array)
-  print('value3 ne: ', value3)
+  -- print('value3 ne: ', value3)
 
   if (value3 == 0) then
     return false
@@ -294,7 +294,7 @@ function Special:checkIsManyDoi(array, numberDoi)
   for i = 1, #(array) - 1 do
     for j = i + 1, #(array) do
       if (array[j]['val'] == array[i]['val']) and t:hasValue(saveValues, array[j]['val']) ~= true then
-        print('add ', array[i]['val'])
+        -- print('add ', array[i]['val'])
         table.insert(saveValues, array[i]['val'])
         table.insert(saveCards, array[i])
         table.insert(saveCards, array[j])
@@ -348,11 +348,11 @@ function Special:handle4Doi(array, results, chiTypes, scores)
   local doiCards = {}
   local newArray = t:sortDesc(array)
 
-  print('-------')
-  for i = 1, #(newArray) do
-    print(newArray[i]['val'])
-  end
-  print('-------')
+  -- print('-------')
+  -- for i = 1, #(newArray) do
+  --   print(newArray[i]['val'])
+  -- end
+  -- print('-------')
 
   for i = 1, #(newArray) - 1 do
     for j = i + 1, #(newArray) do
@@ -365,13 +365,13 @@ function Special:handle4Doi(array, results, chiTypes, scores)
 
   local currentCards = t:filterValuesInArray(array, doiCards)
 
-  print('-------')
-  for i = 1, #(currentCards) do
-    print(currentCards[i]['val'])
-  end
-  print('-------')
+  -- print('-------')
+  -- for i = 1, #(currentCards) do
+  --   print(currentCards[i]['val'])
+  -- end
+  -- print('-------')
 
-  print(#currentCards, #doiCards)
+  -- print(#currentCards, #doiCards)
   local results = { handle4Doi2Thu1MauThau(doiCards, currentCards), handle4Doi1Thu2Doi(doiCards, currentCards) }
 
   for i = 1, #results do
@@ -395,7 +395,7 @@ local function handle3Doi3Doi(doiCards, currentCards)
     chiTwo = arrayAfterFillRacs[2]
     chiThree = arrayAfterFillRacs[3]
 
-    print(chiOne, chiTwo, chiThree)
+    -- print(chiOne, chiTwo, chiThree)
     -- os.exit()
     local converted = convertChiToResult(chiOne, chiTwo, chiThree)
     local result = { converted, types }
@@ -444,11 +444,11 @@ function Special:handle3Doi(array, results, chiTypes, scores)
   local newArray = t:sortDesc(array)
   local saveValueDoi = {}
 
-  print('---3 doi---')
-  for i = 1, #(newArray) do
-    print(newArray[i]['val'])
-  end
-  print('---3 doi---')
+  -- print('---3 doi---')
+  -- for i = 1, #(newArray) do
+  --   print(newArray[i]['val'])
+  -- end
+  -- print('---3 doi---')
 
   for i = 1, #(newArray) - 1 do
     for j = i + 1, #(newArray) do
@@ -462,19 +462,19 @@ function Special:handle3Doi(array, results, chiTypes, scores)
 
   local currentCards = t:filterValuesInArray(array, doiCards)
 
-  print('--cur--')
-  for i = 1, #(currentCards) do
-    print(currentCards[i]['val'])
-  end
-  print('--cur--')
-  print('---doi---')
-  for i = 1, #(doiCards) do
-    print(doiCards[i]['val'])
-  end
-  print('---doi---')
+  -- print('--cur--')
+  -- for i = 1, #(currentCards) do
+  --   print(currentCards[i]['val'])
+  -- end
+  -- print('--cur--')
+  -- print('---doi---')
+  -- for i = 1, #(doiCards) do
+  --   print(doiCards[i]['val'])
+  -- end
+  -- print('---doi---')
 
   local finalResults = { handle3Doi3Doi(doiCards, currentCards), handle3Doi1Thu1Doi(doiCards, currentCards) }
-  print('RESULTS 3doi', #finalResults)
+  -- print('RESULTS 3doi', #finalResults)
 
   for i = 1, #finalResults do
     if finalResults[i] ~= nil then
@@ -490,11 +490,11 @@ function Special:handle5Doi(array, results, chiTypes, scores)
   local doiCards = {}
   local newArray = t:sortDesc(array)
 
-  print('-------')
-  for i = 1, #(newArray) do
-    print(newArray[i]['val'])
-  end
-  print('-------')
+  -- print('-------')
+  -- for i = 1, #(newArray) do
+  --   print(newArray[i]['val'])
+  -- end
+  -- print('-------')
 
   for i = 1, #(newArray) - 1 do
     for j = i + 1, #(newArray) do
@@ -507,11 +507,11 @@ function Special:handle5Doi(array, results, chiTypes, scores)
 
   local currentCards = t:filterValuesInArray(array, doiCards)
 
-  print('-------')
-  for i = 1, #(currentCards) do
-    print(currentCards[i]['val'])
-  end
-  print('-------')
+  -- print('-------')
+  -- for i = 1, #(currentCards) do
+  --   print(currentCards[i]['val'])
+  -- end
+  -- print('-------')
 
   local chiOne = { doiCards[3], doiCards[4], doiCards[9], doiCards[10], currentCards[3] }
   local chiTwo = { doiCards[5], doiCards[6], doiCards[7], doiCards[8], currentCards[2] }
@@ -556,11 +556,11 @@ function Special:handle2Doi(array, results, chiTypes, scores)
   local newArray = t:sortDesc(array)
   local saveCards = {}
 
-  print('-------')
-  for i = 1, #(newArray) do
-    print(newArray[i]['val'])
-  end
-  print('-------')
+  -- print('-------')
+  -- for i = 1, #(newArray) do
+  --   print(newArray[i]['val'])
+  -- end
+  -- print('-------')
 
   -- for i = 1, #(newArray) - 1 do
   --   for j = i + 1, #(newArray) do
@@ -579,11 +579,11 @@ function Special:handle2Doi(array, results, chiTypes, scores)
 
   local currentCards = t:filterValuesInArray(array, saveCards)
 
-  print('-------')
-  for i = 1, #(currentCards) do
-    print(currentCards[i]['val'])
-  end
-  print('-------')
+  -- print('-------')
+  -- for i = 1, #(currentCards) do
+  --   print(currentCards[i]['val'])
+  -- end
+  -- print('-------')
 
   local chiOne = { doiCards[1][1], doiCards[1][2] }
   local chiTwo = { doiCards[2][1], doiCards[2][2] }
@@ -602,16 +602,16 @@ function Special:findSauDoi(cards)
   local idx = 1
 
   while idx < #newCards do
-    print('idx: ', idx)
+    -- print('idx: ', idx)
     if (newCards[idx]['val'] == newCards[idx + 1]['val']) then
       table.insert(doiArray, { newCards[idx], newCards[idx + 1] })
-      print('remove ', newCards[idx]['val'])
+      -- print('remove ', newCards[idx]['val'])
       newCards = t:filterValuesInArray(newCards, { newCards[idx], newCards[idx + 1] })
-      print('----con lai ')
-      for k = 1, #newCards do
-        print('- ', newCards[k]['val'])
-      end
-      print('---end')
+      -- print('----con lai ')
+      -- for k = 1, #newCards do
+      --   print('- ', newCards[k]['val'])
+      -- end
+      -- print('---end')
     else
       idx = idx + 1
     end
@@ -641,11 +641,11 @@ function Special:findHaiPhayNamSanh(cards)
           -- if c:isFirstStronger(chiOne, chiTwo, 'sanh') then
             local chiThree = t:filterValuesInArray(currentnewCards, chiTwo)
 
-            if (#chiThree == 3) then
-              for i = 1, #chiThree do
-                print(chiThree[i]['val'])
-              end
-            end
+            -- if (#chiThree == 3) then
+            --   for i = 1, #chiThree do
+            --     print(chiThree[i]['val'])
+            --   end
+            -- end
             if (chiThree[1]['val'] - chiThree[2]['val'] == 1 and chiThree[2]['val'] - chiThree[3]['val'] == 1) then
               result = convertChiToResult(chiOne, chiTwo, chiThree)
               return result

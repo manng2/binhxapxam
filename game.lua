@@ -141,7 +141,7 @@ end
 
 function Game:findSamCo(array)
     local samcoArray = p:findBaHoacBon(array, false)
-    print('sam co: ', #(samcoArray))
+    -- print('sam co: ', #(samcoArray))
 
     local results = {}
 
@@ -188,23 +188,23 @@ function Game:findSamCo(array)
         end
     end
 
-    print('sam co: ', #(results))
-    for i = 1, #(results) do
-        print(results[i][1]['val'], results[i][2]['val'], results[i][3]['val'],
-              results[i][4]['val'], results[i][5]['val'])
-    end
+    -- print('sam co: ', #(results))
+    -- for i = 1, #(results) do
+    --     print(results[i][1]['val'], results[i][2]['val'], results[i][3]['val'],
+    --           results[i][4]['val'], results[i][5]['val'])
+    -- end
     return results
 end
 
 function Game:findSanh(array)
     local results = p:findSanh(array)
 
-    for i = 1, #results do
-        print('-------')
-        for j = 1, #results[i] do
-            print(results[i][j]['val'], results[i][j]['att'])
-        end
-    end
+    -- for i = 1, #results do
+    --     print('-------')
+    --     for j = 1, #results[i] do
+    --         print(results[i][j]['val'], results[i][j]['att'])
+    --     end
+    -- end
     return results
 end
 
@@ -342,21 +342,21 @@ local function isThungPhaSanh(array) return isThung(array) and isSanh(array) end
 
 function Game:findThungPhaSanh(array)
     local sanhArray = p:findSanh(array)
-    print('co sanh array:', #(sanhArray))
+    -- print('co sanh array:', #(sanhArray))
     local results = {}
 
     for i = 1, #(sanhArray) do
         if isThung(sanhArray[i]) then table.insert(results, sanhArray[i]) end
     end
 
-    print('thung pha sanh: ', #(results))
+    -- print('thung pha sanh: ', #(results))
 
-    for i = 1, #(results) do
-        print('----xx---')
-        for j = 1, #(results[i]) do print(results[i][j]['val']) end
-        print('----xx---')
+    -- for i = 1, #(results) do
+    --     -- print('----xx---')
+    --     for j = 1, #(results[i]) do print(results[i][j]['val']) end
+    --     -- print('----xx---')
 
-    end
+    -- end
     return results;
 end
 
@@ -614,7 +614,7 @@ local function writeResults(content)
 end
 
 local function readableData(array, types, scores)
-    print(#array, types[1], types[2], types[3])
+    -- print(#array, types[1], types[2], types[3])
 
     local result = tostring(scores) .. '| chi 3: ' .. types[3] .. ' | ' ..
                        'chi 2: ' .. types[2] .. ' | ' .. 'chi 1: ' .. types[1] ..
@@ -738,12 +738,12 @@ local function handleFromTopToBottom(currentType, chiOne, currentCards, results,
             currentKind = p:findDoi(currentCards)
         end
 
-        print('[CHECK] ', TYPES[i])
-        print('[CHECK] CurrentKind: ', #currentKind)
+        -- print('[CHECK] ', TYPES[i])
+        -- print('[CHECK] CurrentKind: ', #currentKind)
 
         if #(currentKind) > 0 then
-            print('check currentKind i', #(currentKind), TYPES[i])
-            print('chiOne len: ', #chiOne)
+            -- print('check currentKind i', #(currentKind), TYPES[i])
+            -- print('chiOne len: ', #chiOne)
             for j = 1, #(currentKind) do
                 -- print('check currentKind i', #(currentKind[i]))
                 local chiTwo = t:spreadArray(currentKind[j])
@@ -781,7 +781,7 @@ end
 function Game:handleChiOneThungPhaSanh(chiOne, currentCards, results, chiTypes,
                                         scores, saveSpecialType)
     local currentKind = Game:findThungPhaSanh(currentCards)
-    print('[CARDS] Co ', #currentKind, ' thungPhaSanh')
+    -- print('[CARDS] Co ', #currentKind, ' thungPhaSanh')
     if #(currentKind) > 0 then
         local saveTheLastTypes = {}
         for i = 1, #(currentKind) do
@@ -836,7 +836,7 @@ function Game:handleChiOneThungPhaSanh(chiOne, currentCards, results, chiTypes,
 
                     table.insert(results, converted)
                     table.insert(chiTypes, types)
-                    print('---------SPECIAL CASE---------')
+                    -- print('---------SPECIAL CASE---------')
 
                     table.insert(saveSpecialType, types)
                     return
@@ -883,13 +883,13 @@ local function handleFromTopToBottomTuQuy(chiOne, currentCards, results,
     for i = 2, #TYPES - 1 do
         chiOne = t:shallowCopy(saveTmpChiOne)
         local currentKind = Game:findCurrentKindInNewVersion(TYPES[i], currentCards)
-        print('len curr: ', #currentKind, TYPES[i])
+        -- print('len curr: ', #currentKind, TYPES[i])
         if #currentKind > 0 then
             for j = 1, #currentKind do
                 local chiTwo = currentKind[j]
                 local saveTmpChiTwo = t:shallowCopy(chiTwo)
 
-                print('len chiTwo', #chiTwo)
+                -- print('len chiTwo', #chiTwo)
                 local afterCurrentCards =
                     t:filterValuesInArray(currentCards, chiTwo)
 
@@ -897,23 +897,23 @@ local function handleFromTopToBottomTuQuy(chiOne, currentCards, results,
                     local theLast = Game:findCurrentKindInNewVersion(TYPES[k],
                                                                 afterCurrentCards)
 
-                    print('CHECK TIME', 'tuQuy', TYPES[i], TYPES[k], #theLast)
+                    -- print('CHECK TIME', 'tuQuy', TYPES[i], TYPES[k], #theLast)
                     if #theLast > 0 then
                         for l = 1, #theLast do
                             local chiThree = theLast[l]
 
                             if #chiThree > 3 then
-                                print('ngu ne', #chiThree, #chiTwo, #chiOne)
+                                -- print(#chiThree, #chiTwo, #chiOne)
                                 -- os.exit()
                                 break
                             end
-                            print('len chiThree: ', #chiThree)
+                            -- print('len chiThree: ', #chiThree)
 
                             local racs =
                                 t:filterValuesInArray(afterCurrentCards,
                                                       chiThree)
                             racs = t:sortDesc(racs)
-                            print('racs', #racs)
+                            -- print('racs', #racs)
                             local types = {
                                 'tuQuy', TYPES[i], TYPES[k]
                             }
@@ -921,7 +921,7 @@ local function handleFromTopToBottomTuQuy(chiOne, currentCards, results,
                                                            chiOne, chiTwo,
                                                            chiThree, racs, types)
                             if #arrayAfterFillRacs > 0 then
-                                print('kinhh')
+                                -- print('kinhh')
                                 chiOne = arrayAfterFillRacs[1]
                                 chiTwo = arrayAfterFillRacs[2]
                                 chiThree = arrayAfterFillRacs[3]
@@ -1021,7 +1021,7 @@ function Game:handleChiOneTuQuy(chiOne, currentCards, results, chiTypes, scores,
     else
         currentKind = Game:findCuLu(currentCards)
 
-        print('xx', #currentKind)
+        -- print('xx', #currentKind)
         if #currentKind > 0 then
             for i = 1, #currentKind do
                 local chiTwo = currentKind[i]
@@ -1059,7 +1059,7 @@ end
 
 function Game:handleChiOneCuLu(chiOne, currentCards, results, chiTypes, scores, saveSpecialType)
     local currentKind = Game:findCuLu(currentCards)
-    print('[CARDS] Co ', #currentKind, ' cu Lu')
+    -- print('[CARDS] Co ', #currentKind, ' cu Lu')
     if (#currentKind) > 0 then
         local saveTheLastTypes = {}
         for i = 1, #currentKind do
@@ -1084,28 +1084,28 @@ function Game:handleChiOneCuLu(chiOne, currentCards, results, chiTypes, scores, 
         end
     else
         local thungArray = Game:findThung(currentCards)
-        print('[CARDS] Co ', #thungArray, ' thung')
+        -- print('[CARDS] Co ', #thungArray, ' thung')
 
         if (#thungArray) > 0 then
             local saveTheLastTypes = {}
             for i = 1, #thungArray do
-                print('thung', #thungArray[i])
+                -- print('thung', #thungArray[i])
                 local chiTwo = thungArray[i]
-                print('chiTwo', #chiTwo)
+                -- print('chiTwo', #chiTwo)
 
                 local chiThree = t:filterValuesInArray(currentCards, chiTwo)
 
                 local converted = convertChiToResult(chiOne, chiTwo, chiThree)
                 local typeThree = checkType(chiThree)
-                print('chiThree', #chiThree)
-                print('typeThree', typeThree)
+                -- print('chiThree', #chiThree)
+                -- print('typeThree', typeThree)
                 local types = {'cuLu', 'thung', typeThree}
                 saveTheLastTypes = {'cuLu', 'thung', typeThree}
 
                 table.insert(results, converted)
                 table.insert(chiTypes, types)
 
-                print('LEN NE: ', #types)
+                -- print('LEN NE: ', #types)
             end
 
             if (saveTheLastTypes[3] == 'samCo') then
@@ -1122,7 +1122,7 @@ end
 
 function Game:handleChiOneThung(chiOne, currentCards, results, chiTypes, scores, saveSpecialType)
     local currentKind = Game:findThung(currentCards)
-    print('[CARDS] Co ', #currentKind, ' thung')
+    -- print('[CARDS] Co ', #currentKind, ' thung')
     if (#currentKind) > 0 then
         local saveTheLastTypes = {}
         for i = 1, #currentKind do
@@ -1176,7 +1176,7 @@ end
 
 function Game:handleChiOneSanh(chiOne, currentCards, results, chiTypes, scores, saveSpecialType)
     local currentKind = Game:findSanh(currentCards)
-    print('[CARDS] Co ', #currentKind, ' sanh')
+    -- print('[CARDS] Co ', #currentKind, ' sanh')
     if (#currentKind) > 0 then
         local saveTheLastTypes = {}
         for i = 1, #currentKind do
@@ -1259,14 +1259,14 @@ local function handleFromTopToBottomSamCo(chiOne, currentCards, results,
 
     for i = 7, #TYPES - 1 do
         local currentKind = Game:findCurrentKindInNewVersion(TYPES[i], currentCards)
-        print('len curr: ', #currentKind, TYPES[i])
+        -- print('len curr: ', #currentKind, TYPES[i])
 
         if #currentKind > 0 then
             for j = 1, #currentKind do
                 local chiTwo = currentKind[j]
                 local saveTmpChiTwo = t:shallowCopy(chiTwo)
 
-                print('len chiTwo', #chiTwo)
+                -- print('len chiTwo', #chiTwo)
                 local afterCurrentCards =
                     t:filterValuesInArray(currentCards, chiTwo)
 
@@ -1414,28 +1414,28 @@ local function handleSpecialCase(array, results, chiTypes, scores)
     --     return
     -- end
     if specialCase:checkIsThreeMauThau(array) then
-        print('RIGHT threeMauthau')
+        -- print('RIGHT threeMauthau')
         specialCase:threeMauThau(array, results, chiTypes, scores)
     elseif specialCase:checkIsSamCoTu2Den12(array) then
-        print('RIGHT samCoTu2Den12')
+        -- print('RIGHT samCoTu2Den12')
         specialCase:samCoTu2Den12(array, results, chiTypes, scores)
     elseif specialCase:checkIsManyDoi(array, 4) then
-        print('RIGHT handle4Doi')
+        -- print('RIGHT handle4Doi')
         -- os.exit()
 
         specialCase:handle4Doi(array, results, chiTypes, scores)
     elseif specialCase:checkIsManyDoi(array, 5) then
-        print('RIGHT handle5Doi')
+        -- print('RIGHT handle5Doi')
         -- os.exit()
 
         specialCase:handle5Doi(array, results, chiTypes, scores)
     elseif specialCase:checkIsManyDoi(array, 3) then
-        print('RIGHT handle3Doi')
+        -- print('RIGHT handle3Doi')
         -- os.exit()
 
         specialCase:handle3Doi(array, results, chiTypes, scores)
     elseif specialCase:checkIsManyDoi(array, 2) then
-        print('RIGHT handle2Doi')
+        -- print('RIGHT handle2Doi')
         -- os.exit()
         specialCase:handle2Doi(array, results, chiTypes, scores)
     end
@@ -1448,9 +1448,9 @@ local function calculateResultValue(result, type)
 
     local score = -100000
     -- print('typee: ', type[1], type[2], type[3])
-    for i = 1, #result do
-        print(result[i]['val'], result[i]['att'])
-    end
+    -- for i = 1, #result do
+    --     -- print(result[i]['val'], result[i]['att'])
+    -- end
     -- print('-----')
 
     if (p:isResultValid(chiOne, chiTwo, chiThree, type)) then
@@ -1565,12 +1565,12 @@ local function handleFromTopToBottomBlackTable(currentType, chiOne, currentCards
 
                 local afterCurrentCards = t:filterValuesInArray(currentCards, chiTwo)
 
-                if (TYPES[i] == 'thu') then
-                    print('THU NE')
-                    for k = 1, #chiTwo do
-                        print(chiTwo[k]['val'], chiTwo[k]['att'])
-                    end
-                end
+                -- if (TYPES[i] == 'thu') then
+                --     -- print('THU NE')
+                --     for k = 1, #chiTwo do
+                --         print(chiTwo[k]['val'], chiTwo[k]['att'])
+                --     end
+                -- end
 
                 if (TYPES[i] == 'samCo') then
                     if (compare:isFirstStronger(chiOne, chiTwo, 'samCo')) then

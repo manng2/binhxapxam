@@ -38,14 +38,14 @@ function PreHandle:findDoi(array)
     end
 
     -- print('Doi: ', #(results))
-    for i = 1, #results do
-        print('-----')
-        for j = 1, #results[i] do
-            print(results[i][j]['val'], results[i][j]['att'])
-        end
-        print('-----')
+    -- for i = 1, #results do
+    --     print('-----')
+    --     for j = 1, #results[i] do
+    --         print(results[i][j]['val'], results[i][j]['att'])
+    --     end
+    --     print('-----')
 
-    end
+    -- end
     return results
 end
 
@@ -598,11 +598,11 @@ function PreHandle:divideRacsTo3Chi(chiOne, chiTwo, chiThree, racs, types)
         table.insert(saveTmpChiThree, chiThree[i]['val'])
     end
 
-    print('1. len racs: ', #racs)
+    -- print('1. len racs: ', #racs)
 
-    print('chi 1: ', #newChiOne)
-    print('chi 2: ', #newChiTwo)
-    print('chi 3: ', #newChiThree)
+    -- print('chi 1: ', #newChiOne)
+    -- print('chi 2: ', #newChiTwo)
+    -- print('chi 3: ', #newChiThree)
 
     for i = 1, #racs do
         if #newChiThree == 3 then
@@ -619,11 +619,11 @@ function PreHandle:divideRacsTo3Chi(chiOne, chiTwo, chiThree, racs, types)
     racs = t:filterValuesInArray(racs, saveTmp)
     saveTmp = {}
 
-    print('2. len racs: ', #racs)
+    -- print('2. len racs: ', #racs)
 
-    print('chi 1: ', #newChiOne)
-    print('chi 2: ', #newChiTwo)
-    print('chi 3: ', #newChiThree)
+    -- print('chi 1: ', #newChiOne)
+    -- print('chi 2: ', #newChiTwo)
+    -- print('chi 3: ', #newChiThree)
 
     for i = 1, #racs do
         if #newChiTwo == 5 then
@@ -640,11 +640,11 @@ function PreHandle:divideRacsTo3Chi(chiOne, chiTwo, chiThree, racs, types)
     racs = t:filterValuesInArray(racs, saveTmp)
     saveTmp = {}
 
-    print('3. len racs: ', #racs)
+    -- print('3. len racs: ', #racs)
 
-    print('chi 1: ', #newChiOne)
-    print('chi 2: ', #newChiTwo)
-    print('chi 3: ', #newChiThree)
+    -- print('chi 1: ', #newChiOne)
+    -- print('chi 2: ', #newChiTwo)
+    -- print('chi 3: ', #newChiThree)
 
     -- hard code when cannot fill to chi Two
 
@@ -677,22 +677,22 @@ function PreHandle:divideRacsTo3Chi(chiOne, chiTwo, chiThree, racs, types)
 
     racs = t:filterValuesInArray(racs, saveTmp)
 
-    print('len racs: ', #racs)
-    print('-----------------')
+    -- print('len racs: ', #racs)
+    -- print('-----------------')
 
-    for i = 1, #newChiOne do
-        print(types[1])
-        print(newChiOne[i]['val'])
-    end
-    for i = 1, #newChiTwo do
-        print(types[2])
-        print(newChiTwo[i]['val'])
-    end
-    for i = 1, #newChiThree do
-        print(types[3])
-        print(newChiThree[i]['val'])
-    end
-    print('-----------------')
+    -- for i = 1, #newChiOne do
+    --     print(types[1])
+    --     print(newChiOne[i]['val'])
+    -- end
+    -- for i = 1, #newChiTwo do
+    --     print(types[2])
+    --     print(newChiTwo[i]['val'])
+    -- end
+    -- for i = 1, #newChiThree do
+    --     print(types[3])
+    --     print(newChiThree[i]['val'])
+    -- end
+    -- print('-----------------')
 
     if (#newChiOne + #newChiTwo + #newChiThree == 13 and #racs == 0 ) then
         if (types ~= nil) then
@@ -778,8 +778,8 @@ end
 function PreHandle:divideRacsTo3ChiWithChiTwoQKA(chiOne, chiTwo, chiThree, racs, types, results, chiTypes)
 
     -- THIS IS SEPCIAL CASE, CHI THREE ALWAYS HAVE 2 ELEMENTS
-    print('vai lz')
-    print(#chiOne, #chiTwo, #chiThree)
+    -- print('vai lz')
+    -- print(#chiOne, #chiTwo, #chiThree)
     local saveTmpChiOne = {}
     local saveTmpChiTwo = {}
     local saveTmpChiThree = {}
@@ -829,32 +829,32 @@ function PreHandle:divideRacsTo3ChiWithChiTwoQKA(chiOne, chiTwo, chiThree, racs,
     for i = 1, #racs do
         if (t:hasValue(saveTmpChiThree, racs[i]['val']) ~= true and #newChiThree ~= 3) then
             table.insert(newChiThree, racs[i])
-            print('con lai: ', #racs)
-            print('insert chi 3: ', racs[i]['val'], ' - ', racs[i]['att'])
+            -- print('con lai: ', #racs)
+            -- print('insert chi 3: ', racs[i]['val'], ' - ', racs[i]['att'])
 
             local currentCards = t:filterValuesInArray(racs, { racs[i] })
             local copySaveTmpChiTwo = t:shallowCopy(saveTmpChiTwo)
 
-            print('currentCards: ', #currentCards)
+            -- print('currentCards: ', #currentCards)
             for j = 1, #currentCards do
                 if (t:hasValue(saveTmpChiTwo, currentCards[j]['val']) ~= true) then
                     table.insert(newChiTwo, currentCards[j])
-                    print('insert: ', currentCards[j]['val'], ' - ', currentCards[j]['att'])
-                    print('INSERTED TO CHI 2', #newChiTwo)
+                    -- print('insert: ', currentCards[j]['val'], ' - ', currentCards[j]['att'])
+                    -- print('INSERTED TO CHI 2', #newChiTwo)
                     table.insert(saveTmpChiTwo, currentCards[j]['val'])
                 else
-                    print('ko hop le', #newChiTwo)
+                    -- print('ko hop le', #newChiTwo)
                     break
                 end
             end
 
-            print('len chi 2', #newChiTwo)
+            -- print('len chi 2', #newChiTwo)
             -- in case add success
             if #newChiTwo == 5 then
                 local converted = convertChiToResult(newChiOne, newChiTwo, newChiThree)
                 table.insert(results, converted)
                 table.insert(chiTypes, types)
-                print('ADDED')
+                -- print('ADDED')
             end
             saveTmpChiTwo = t:shallowCopy(copySaveTmpChiTwo)
             newChiTwo = t:shallowCopy(chiTwo)
@@ -874,17 +874,17 @@ function PreHandle:handleChiThreeDoi(chiOne, chiTwo, typeChiOne, typeChiTwo, aft
         chiThree = doiArray[i]
         local racs = t:filterValuesInArray(afterCurrentCards, chiThree)
 
-        for k = 1, #chiOne do
-            print(chiOne[k]['val'], chiOne[k]['att'])
-        end
-        print('-----', typeChiOne)
-        for x = 1, #chiTwo do
-            print(chiTwo[x]['val'], chiTwo[x]['att'])
-        end
-        print('-----', typeChiTwo)
-        for n = 1, #chiThree do
-            print(chiThree[n]['val'], chiThree[n]['att'])
-        end
+        -- for k = 1, #chiOne do
+        --     print(chiOne[k]['val'], chiOne[k]['att'])
+        -- end
+        -- print('-----', typeChiOne)
+        -- for x = 1, #chiTwo do
+        --     print(chiTwo[x]['val'], chiTwo[x]['att'])
+        -- end
+        -- print('-----', typeChiTwo)
+        -- for n = 1, #chiThree do
+        --     print(chiThree[n]['val'], chiThree[n]['att'])
+        -- end
         -- print('-----')
         -- print('xxxxxx')
         -- os.exit()
@@ -898,7 +898,7 @@ function PreHandle:handleChiThreeDoi(chiOne, chiTwo, typeChiOne, typeChiTwo, aft
             arrayAfterFillRacs = PreHandle:divideRacsTo3Chi(chiOne, chiTwo, chiThree, racs, types)
         end
 
-        print('spnds', #arrayAfterFillRacs)
+        -- print('spnds', #arrayAfterFillRacs)
         if (#arrayAfterFillRacs > 0) then
             -- print('brohhhh')
             -- os.exit()
@@ -943,11 +943,11 @@ function PreHandle:handleChiThreeMauThau(chiOne, chiTwo, typeChiOne, typeChiTwo,
         table.insert(saveTmpTwo, chiTwo[i]['val'])
     end
 
-    print('------')
-        print('hien tai chi One', #copyChiOne)
-        print('hien tai chi Two', #copyChiTwo)
-        print('hien tai chi Three', #chiThree)
-    print('------')
+    -- print('------')
+    --     print('hien tai chi One', #copyChiOne)
+    --     print('hien tai chi Two', #copyChiTwo)
+    --     print('hien tai chi Three', #chiThree)
+    -- print('------')
 
     for i = 1, #afterCurrentCards do
         if t:hasValue(saveTmpThree, afterCurrentCards[i]['val']) ~= true and #chiThree < 3 then
@@ -961,14 +961,14 @@ function PreHandle:handleChiThreeMauThau(chiOne, chiTwo, typeChiOne, typeChiTwo,
     end
     local typeChiThree = PreHandle:checkType(chiThree)
 
-    print('1-----')
-        print('hien tai chi One', #copyChiOne)
-        print('hien tai chi Two', #copyChiTwo)
-        print('hien tai chi Three', #chiThree)
-    print('1-----')
+    -- print('1-----')
+    --     print('hien tai chi One', #copyChiOne)
+    --     print('hien tai chi Two', #copyChiTwo)
+    --     print('hien tai chi Three', #chiThree)
+    -- print('1-----')
 
     afterCurrentCards = t:filterValuesInArray(afterCurrentCards, chiThree)
-    print('current cards: ', #afterCurrentCards)
+    -- print('current cards: ', #afterCurrentCards)
 
     for i = 1, #afterCurrentCards do
         if t:hasValue(saveTmpTwo, afterCurrentCards[i]['val']) ~= true and #chiTwo < 5 then
@@ -982,18 +982,18 @@ function PreHandle:handleChiThreeMauThau(chiOne, chiTwo, typeChiOne, typeChiTwo,
     end
 
     if (typeChiTwo ~= PreHandle:checkType(copyChiTwo)) then
-        print(PreHandle:checkType(copyChiTwo))
+        -- print(PreHandle:checkType(copyChiTwo))
         return
     end
 
-    print('2-----')
-        print('hien tai chi One', #chiOne)
-        print('hien tai chi Two', #copyChiTwo)
-        print('hien tai chi Three', #chiThree)
-    print('2-----')
+    -- print('2-----')
+    --     print('hien tai chi One', #chiOne)
+    --     print('hien tai chi Two', #copyChiTwo)
+    --     print('hien tai chi Three', #chiThree)
+    -- print('2-----')
 
     afterCurrentCards = t:filterValuesInArray(afterCurrentCards, copyChiTwo)
-    print('current cards: ', #afterCurrentCards)
+    -- print('current cards: ', #afterCurrentCards)
 
     for i = 1, #afterCurrentCards do
         table.insert(copyChiOne, afterCurrentCards[i])
@@ -1009,11 +1009,11 @@ function PreHandle:handleChiThreeMauThau(chiOne, chiTwo, typeChiOne, typeChiTwo,
         end
     end
 
-    print('3-----')
-        print('hien tai chi One', #copyChiOne)
-        print('hien tai chi Two', #copyChiTwo)
-        print('hien tai chi Three', #chiThree)
-    print('3-----')
+    -- print('3-----')
+    --     print('hien tai chi One', #copyChiOne)
+    --     print('hien tai chi Two', #copyChiTwo)
+    --     print('hien tai chi Three', #chiThree)
+    -- print('3-----')
 
     local converted = convertChiToResult(copyChiOne, copyChiTwo, chiThree)
     -- if (typeChiOne == 'thu') then
@@ -1106,9 +1106,9 @@ function PreHandle:isResultValid(chiOne, chiTwo, chiThree, types)
     -- end
     -- print(types[1], types[2], types[3])
     -- os.exit()
-    print(PreHandle:checkType(chiOne))
-    print(PreHandle:checkType(chiTwo))
-    print(PreHandle:checkType(chiThree))
+    -- print(PreHandle:checkType(chiOne))
+    -- print(PreHandle:checkType(chiTwo))
+    -- print(PreHandle:checkType(chiThree))
 
     return PreHandle:checkType(chiOne) == types[1] and
         PreHandle:checkType(chiTwo) == types[2] and

@@ -324,17 +324,17 @@ end
 
 function T:filterValuesInArray(array, target)
 
-  print('RRAY: ')
-  for i = 1, #array do
-    print(array[i]['val'], array[i]['att'])
-  end
-  print('end')
+  -- print('RRAY: ')
+  -- for i = 1, #array do
+  --   print(array[i]['val'], array[i]['att'])
+  -- end
+  -- print('end')
 
-  print('target: ')
-  for i = 1, #target do
-    print(target[i]['val'], target[i]['att'])
-  end
-  print('end')
+  -- print('target: ')
+  -- for i = 1, #target do
+  --   print(target[i]['val'], target[i]['att'])
+  -- end
+  -- print('end')
   local results = T:shallowCopy(array)
 
   for i = 1, #(target) do
@@ -399,14 +399,14 @@ function T:findThungByColorAndAtt(array)
 end
 
 function T:compareTwoArray(arrayOne, arrayTwo)
-  print('VIEW ZONE')
-  for i = 1, #arrayOne do
-    print(arrayOne[i])
-  end
-  print('----')
-  for i = 1, #arrayTwo do
-    print(arrayTwo[i])
-  end
+  -- print('VIEW ZONE')
+  -- for i = 1, #arrayOne do
+  --   print(arrayOne[i])
+  -- end
+  -- print('----')
+  -- for i = 1, #arrayTwo do
+  --   print(arrayTwo[i])
+  -- end
 
   for i = 1, #arrayOne do
     if (arrayOne[i] ~= arrayTwo[i]) then

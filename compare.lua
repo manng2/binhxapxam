@@ -54,7 +54,7 @@ local function doi(firstArray, secondArray)
     end
 
     for i = 1, minLen do
-      print(firstArray[i]['val'], secondArray[i]['val'])
+      -- print(firstArray[i]['val'], secondArray[i]['val'])
       if firstArray[i]['val'] > secondArray[i]['val'] then
         return true
       elseif firstArray[i]['val'] < secondArray[i]['val'] then
@@ -259,7 +259,7 @@ function CompareAction:isFirstStronger(firstArray, secondArray, type)
       --   print('-----------------------------------------------')
       -- end
       if newFirstArray[i]['val'] == 11 and newFirstArray[i]['att'] == 2 and newSecondArray[i]['val'] == 13 and newSecondArray[i]['att'] == 2 then
-        print('dm m', newFirstArray[i]['val'] > newSecondArray[i]['val'])
+        -- print(newFirstArray[i]['val'] > newSecondArray[i]['val'])
       end
       if newFirstArray[i]['val'] > newSecondArray[i]['val'] then
         return true

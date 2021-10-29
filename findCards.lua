@@ -77,7 +77,7 @@ local function findIndexInTypes(type)
 end
 
 local function readableData(array, types, scores)
-  print(#array, types[1], types[2], types[3])
+  -- print(#array, types[1], types[2], types[3])
 
   -- hard code
   if #array ~= 13 or #types ~= 3 then
@@ -195,15 +195,15 @@ local function soTungChi(myCards, myTypes, oppCards, oppTypes)
   local countMy = 0
   local countOpp = 0
 
-  print('----cccc-----', myTypes[1], myTypes[2], myTypes[3])
-  for k = 1, #myCards do
-    print(myCards[k]['val'])
-  end
-  print('----cccc-----')
+  -- print('----cccc-----', myTypes[1], myTypes[2], myTypes[3])
+  -- for k = 1, #myCards do
+  --   print(myCards[k]['val'])
+  -- end
+  -- print('----cccc-----')
 
 
   local myCardsSplited = t:splitByChi(myCards)
-  print('12xxxx', #oppCards)
+  -- print('12xxxx', #oppCards)
   local oppCardsSplited = t:splitByChi(oppCards)
 
   local myChiOne = myCardsSplited[1]
@@ -216,14 +216,14 @@ local function soTungChi(myCards, myTypes, oppCards, oppTypes)
 
   for i = 1, 3 do
     if (myTypes[i] == oppTypes[i]) then
-      print('hello', oppTypes[i])
+      -- print('hello', oppTypes[i])
       for k = 1, #myCardsSplited[i] do
-        print(myCardsSplited[i][k]['val'])
+        -- print(myCardsSplited[i][k]['val'])
       end
-      print('----')
+      -- print('----')
 
       for l = 1, #oppCardsSplited[i] do
-        print(oppCardsSplited[i][l]['val'])
+        -- print(oppCardsSplited[i][l]['val'])
       end
       -- print(#myCardsSplited[i])
       -- print(#oppCardsSplited[i])
@@ -360,7 +360,7 @@ end
 local function findResultsWithOldVersion(cards, results, chiTypes, scores)
   for i = 1, #TYPES do
     local currentKind = findCurrentKindInNewVersion(TYPES[i], cards)
-        print('[CHI ONE]', TYPES[i], #currentKind)
+        -- print('[CHI ONE]', TYPES[i], #currentKind)
     if #currentKind > 0 then
       for j = 1, #currentKind do
         local chiOne = currentKind[j]
@@ -498,7 +498,7 @@ local function findNextWithChiOne(results, chiOne, type, currentCards, chiType, 
   for i = 1, #(currentKind) do
     local copyChiType = t:shallowCopy(chiType)
     local chiTwo = currentKind[i]
-    print('chi 2 :', #chiTwo)
+    -- print('chi 2 :', #chiTwo)
 
     -- if c:isFirstStronger(chiOne, chiTwo) then
     table.insert(copyChiType, type)
@@ -539,9 +539,9 @@ local function findResultsWithNewVersion(cards, results, chiTypes, scores)
       local chiTwo = {}
       local chiThree = {}
       local currentCards = t:shallowCopy(cards)
-      print('currrrrrrr:', #currentCards, #chiOne)
+      -- print('currrrrrrr:', #currentCards, #chiOne)
       currentCards = t:filterValuesInArray(currentCards, chiOne)
-      print('currrrrssss:', #currentCards)
+      -- print('currrrrssss:', #currentCards)
 
       tmpC = g:findCurrentKind(TYPES[i], currentCards)
 
@@ -607,10 +607,10 @@ function Find:findCards(cards, oppCards, oppTypes)
   -- findResultsWithOldVersion(cards, results, chiTypes, scores)
   findResultsWithNewVersion(cards, results, chiTypes, scores)
 
-  print('opp Cards: ')
-  for i = 1, #oppCards do
-    print(oppCards[i]['val'])
-  end
+  -- print('opp Cards: ')
+  -- for i = 1, #oppCards do
+  --   -- print(oppCards[i]['val'])
+  -- end
 
   if isToiTrang(oppTypes) then
     local curr = handleOppToiTrang(oppTypes[1], cards)
